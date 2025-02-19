@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const apiKey = "QihWWD6Bgy/rg7CSnyw+gK2FwGoFwoGSb04ZdGmaxyZstol4Cgs26MCOxxv++1eXz3q6pLQtFJt83Y54LbOafg=="; // 여기에 본인 인증키 입력
+      const url =
+        "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 
-    <script>
-        //aas
+      const params = new URLSearchParams({
+        serviceKey: apiKey,
+        numOfRows: 10,
+        pageNo: 1,
+        MobileOS: "ETC",
+        MobileApp: "TestApp",
+        mapX: 126.9784, // 서울 경도 예시
+        mapY: 37.5665, // 서울 위도 예시
+        radius: 1000,
+        _type: "json",
+      });
+
+      fetch(`${url}?${params}`)
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
     </script>
-</head>
-<body>
-    
-</body>
+  </body>
 </html>
