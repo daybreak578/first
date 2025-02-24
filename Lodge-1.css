@@ -7,8 +7,6 @@ body {
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  background-image: url('./back.webp'); 
-  background-size: cover;
 }
 
 .hotel-detail {
@@ -56,8 +54,7 @@ body {
 
 .map-container {
   flex: 1;
-  height: 350px;
-  position: absolute;
-  top: 180px;
-  right: 10px;
+  height: 500px;
+  position: relative;
+
 }
