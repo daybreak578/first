@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,6 +66,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- 숙박업소 세부 정보 -->
@@ -82,10 +84,8 @@
   <div id="map" class="map-container"></div>
 
   <!-- Kakao 지도 API (수동 로드) -->
-  <script type="text/javascript" 
-  
-           src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a&libraries=clusterer,services&autoload=false"></script>
-  
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a"></script>
+
   <script>
     function getQueryParams() {
       const params = new URLSearchParams(window.location.search);
@@ -95,8 +95,8 @@
         dist: params.get("dist"),
         tel: params.get("tel"),
         image: params.get("image"),
-        mapx: parseFloat(params.get("mapx")), // 경도 (숫자로 변환)
-        mapy: parseFloat(params.get("mapy"))  // 위도 (숫자로 변환)
+        mapx: parseFloat(params.get("mapX")), // 경도 (숫자로 변환)
+        mapy: parseFloat(params.get("mapY"))  // 위도 (숫자로 변환)
       };
     }
 
@@ -111,28 +111,41 @@
     } else {
       document.getElementById("image").style.display = "none";
     }
-    
+
     // Kakao Maps API 로드 후 실행
-    kakao.maps.load(function() {
-        var mapContainer = document.getElementById('map');
-        var mapOption = {
-            center: new kakao.maps.LatLng(35.1795543, 129.0756416), // 기본 위치 (서울)
-            level: 4 // 줌 레벨
-        };
+    kakao.maps.load(function () {
+      const data = getQueryParams();
+      let mapx = data.mapx;
+      let mapy = data.mapy;
+      console.log(mapx);
+      console.log(mapy);
+      console.log(typeof (mapx));
+      console.log(typeof (mapy));
 
-        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        // 유효한 좌표인지 확인 후 마커 추가
-        if (!isNaN(data.mapx) && !isNaN(data.mapy)) {
-            var markerPosition = new kakao.maps.LatLng(data.mapy, data.mapx);
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-            marker.setMap(map);
-            map.setCenter(markerPosition);
-        }
+      let mapContainer = document.getElementById('map');
+      let mapOption = {
+        // center: new kakao.maps.LatLng(35.1877669046, 129.0815722951), // 기본 위치 (서울)
+        center: new kakao.maps.LatLng(mapx, mapy),
+        level: 3 // 줌 레벨
+      };
+
+      let map = new kakao.maps.Map(mapContainer, mapOption);
+      kakao.maps.load(function () {
+        let map = new kakao.maps.Map(mapContainer, options);
+      });
+      // 유효한 좌표인지 확인 후 마커 추가
+      if (!isNaN(data.mapx) && !isNaN(data.mapy)) {
+        let markerPosition = new kakao.maps.LatLng(data.mapy, data.mapx);
+        let marker = new kakao.maps.Marker({
+          position: markerPosition
+        });
+        marker.setMap(map);
+        map.setCenter(markerPosition);
+      }
     });
   </script>
 
 </body>
+
 </html>

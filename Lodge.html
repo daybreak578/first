@@ -100,12 +100,12 @@
     function displayHotelNames(hotels) {
       const container = document.getElementById("hotel-list");
       container.innerHTML = "";  // 기존 내용 초기화
-
       hotels.forEach((hotel) => {
         const hotelCard = document.createElement("div");
         hotelCard.classList.add("hotel-card");
         hotelCard.style.backgroundColor = getRandomColor(); // 랜덤 색상 적용
         hotelCard.innerHTML = `<h3>${hotel.title}</h3>`;
+        console.log(hotel)
 
         hotelCard.addEventListener("click", () => {
           const queryParams = new URLSearchParams({
@@ -113,8 +113,8 @@
             addr: hotel.addr1 || "정보 없음",
             dist: hotel.dist || "정보 없음",
             tel: hotel.tel || "정보 없음",
-            mapX : hotel.mapX || "정보 없음",
-            
+            mapX : hotel.mapy || "정보 없음",
+            mapY : hotel.mapx || "정보 없음",
             image: hotel.firstimage || "",
           }).toString();
 
