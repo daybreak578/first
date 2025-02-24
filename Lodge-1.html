@@ -132,8 +132,9 @@
 
       let map = new kakao.maps.Map(mapContainer, mapOption);
       kakao.maps.load(function () {
-        let map = new kakao.maps.Map(mapContainer, options);
+        let map = new kakao.maps.Map(mapContainer, mapOption);
       });
+      
       // 유효한 좌표인지 확인 후 마커 추가
       if (!isNaN(data.mapx) && !isNaN(data.mapy)) {
         let markerPosition = new kakao.maps.LatLng(data.mapy, data.mapx);
