@@ -2,16 +2,17 @@
 <header id="header">
     <!-- 로고 -->
     <div>
-        <a href="./Mainpage.html"><img src="./logo.webp" alt=""></a>
+        <a href="./Home.html"><img src="./logo.webp" alt=""></a>
     </div>
     <!-- 메뉴 -->
     <div class="menu">
         <input class="menubtnmain" type="button" id="home" value="Home">
-        <input class="menubtn" type="button" id="traffic" value="교통현황" onclick="loginCheck()">
-        <input class="menubtn" type="button" id="sightseeing" value="관광지" onclick="loginCheck()">
-        <input class="menubtn" type="button" id="culturalfacility" value="문화시설" onclick="loginCheck()">
-        <input class="menubtn" type="button" id="restuarant" value="음식점" onclick="loginCheck()">
-        <input class="menubtn" type="button" id="festival" value="축제공연" onclick="loginCheck()">
+        <input class="menubtn" type="button" id="traffic" value="교통현황" onclick="loginCheck(this.value)">
+        <input class="menubtn" type="button" id="sightseeing" value="관광지" onclick="loginCheck(this.value)">
+        <input class="menubtn" type="button" id="culturalfacility" value="문화시설" onclick="loginCheck(this.value)">
+        <input class="menubtn" type="button" id="restuarant" value="음식점" onclick="loginCheck(this.value)">
+        <input class="menubtn" type="button" id="festival" value="축제공연" onclick="loginCheck(this.value)">
+        <input class="menubtn" type="button" id="festival" value="숙박업소" onclick="loginCheck(this.value)">
     </div>
     <div id="login-area" style="position:absolute; top:20px; right:60px;">
         <a class="login" href="login.html" id="login" style="text-decoration: none; display:inline-block;">로그인 |</a>

@@ -23,13 +23,16 @@ $(document).ready(function () {
     window.location.href = "Mainpage.html";
   });
 });
-function loginCheck() {
+function loginCheck(name) {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
   if (loginstatus == true) {
-    window.location.href = "traffic.html";
+    move(name);
   } else {
     alert("로그인을 해주세요.");
   }
+}
+function move(name) {
+    window.location.href = `${name}.html`;
 }
 function loginChecka() {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
