@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>숙박업소 세부 정보</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hotel-detail {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    .hotel-detail h2 {
+      font-size: 24px;
+      margin: 0 0 10px;
+    }
+
+    .hotel-detail img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .hotel-detail p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+    }
+
+    #map {
+      flex: 1;
+      height: 350px;
+      border-radius: 8px;
+    }
+
+    .map-container {
+      flex: 1;
+      height: 350px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 숙박업소 세부 정보 -->
+  <div class="hotel-detail">
+    <h2 id="title">숙박업소 정보</h2>
+    <p><strong>주소:</strong> <span id="addr">정보 없음</span></p>
+    <p><strong>거리:</strong> <span id="dist">정보 없음</span></p>
+    <p><strong>전화번호:</strong> <span id="tel">정보 없음</span></p>
+    <img id="image" src="" alt="이미지 없음">
+    <br>
+    <a href="./Lodge.html" class="back-btn">목록으로 돌아가기</a>
+  </div>
+
+  <!-- 지도 영역 -->
+  <div id="map" class="map-container"></div>
+
+  <!-- Kakao 지도 API (수동 로드) -->
+  <script type="text/javascript" 
+  
+           src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a&libraries=clusterer,services&autoload=false"></script>
+  
+  <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        title: params.get("title"),
+        addr: params.get("addr"),
+        dist: params.get("dist"),
+        tel: params.get("tel"),
+        image: params.get("image"),
+        mapx: parseFloat(params.get("mapx")), // 경도 (숫자로 변환)
+        mapy: parseFloat(params.get("mapy"))  // 위도 (숫자로 변환)
+      };
+    }
+
+    const data = getQueryParams();
+    document.getElementById("title").textContent = data.title || "정보 없음";
+    document.getElementById("addr").textContent = data.addr || "정보 없음";
+    document.getElementById("dist").textContent = data.dist || "정보 없음";
+    document.getElementById("tel").textContent = data.tel || "정보 없음";
+
+    if (data.image) {
+      document.getElementById("image").src = data.image;
+    } else {
+      document.getElementById("image").style.display = "none";
+    }
+    
+    // Kakao Maps API 로드 후 실행
+    kakao.maps.load(function() {
+        var mapContainer = document.getElementById('map');
+        var mapOption = {
+            center: new kakao.maps.LatLng(35.1795543, 129.0756416), // 기본 위치 (서울)
+            level: 4 // 줌 레벨
+        };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 유효한 좌표인지 확인 후 마커 추가
+        if (!isNaN(data.mapx) && !isNaN(data.mapy)) {
+            var markerPosition = new kakao.maps.LatLng(data.mapy, data.mapx);
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            marker.setMap(map);
+            map.setCenter(markerPosition);
+        }
+    });
+  </script>
+
+</body>
+</html>
