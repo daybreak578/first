@@ -3,7 +3,7 @@ $(document).ready(function () {
   let name = localStorage.getItem("name");
 
   // header.html 로드 후 로그인 상태 확인
-  $("#header").load("./header.html", function () {
+  $("#header").load("header.html", function () {
     if (loginstatus === "true") {
       // 로그인 상태일 때
       $("#login, #join").hide(); // 로그인 & 회원가입 버튼 숨김
@@ -26,8 +26,15 @@ $(document).ready(function () {
 function loginCheck() {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
   if (loginstatus == true) {
-    window.location.href = "page1.html";
+    window.location.href = "traffic.html";
   } else {
     alert("로그인을 해주세요.");
   }
+}
+function loginChecka() {
+  let loginstatus = sessionStorage.getItem("loginstatus") === "true";
+  if (loginstatus != true) {
+    alert("로그인을 해주세요.");
+    window.location.href = "Mainpage.html";
+  } 
 }

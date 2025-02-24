@@ -1,33 +1,50 @@
+.menubtnmain {
+    width: 100px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 20px;
+    border: none;
+}
 
-        .menubtnmain {
-            width: 100px;
-            height: 30px;
-            border-radius: 8px;
-            background-color: white;
-            font-size: 20px;
-            border: none;
-        }
-        .menubtnmain:hover {
-            cursor: pointer;
-        }
+.menubtnmain:hover {
+    cursor: pointer;
+}
 
-        .menubtn {
-            width: 100px;
-            height: 30px;
-            border-radius: 8px;
-            background-color: transparent;
-            font-size: 20px;
-            border: none;
-        }
-        .menubtn:hover {
-            cursor: pointer;
-        }
-        .menu{
-            display: flex;  
-            justify-content: center; 
-        }
-        .login{
-            color: black;
-        }
+.menubtn {
+    width: 100px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: transparent;
+    font-size: 20px;
+    border: none;
+}
 
-     
+.menubtn:hover {
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 200px;
+    left: 30%;
+}
+
+.login {
+    color: black;
+    text-decoration: none; 
+    display:inline-block;
+}
+
+.logout {
+    color: black;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+}
+
+.logout:hover {
+    cursor: pointer;
+}

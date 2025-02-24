@@ -1,0 +1,65 @@
+body{
+    align-content: center; 
+    background-image: url('./back.webp'); 
+    background-size: cover;
+}
+.select{
+    position: absolute;
+    left: 60px;
+    top: 300px;
+    background-color: rgb(40, 40, 40);
+    width: 200px;
+    height: 50px;
+    border-radius: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.option{
+    position: relative;
+    top: 68px;
+    left: 45px;
+    margin: 5px;
+    background-color: rgb(40, 40, 40);
+    width: 200px;
+    height: 50px;
+    border-radius: 16px; 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 1px;
+    border-color: white;
+}
+.trafficcolor {
+    position: absolute;
+    right: 10px;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 200px;
+    height: 100px;
+    border-radius: 16px; 
+
+}
+.map{
+    border-radius: 16px; 
+    position: absolute; 
+    right: 10px; 
+    top: 400px; 
+    width:75%; 
+    height:50%;
+}
+.restarea{
+    position: absolute;
+    left: 270px;
+    top: 300px;
+    background-color: rgb(40, 40, 40);
+    width: 200px;
+    height: 50px;
+    border-radius: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; 
+    color: white;
+}
