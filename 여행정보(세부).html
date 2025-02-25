@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고속도로 정보 API</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #travel-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 70%;
+        }
+
+        .travel-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .travel-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        select {
+            margin: 10px;
+            padding: 5px;
+        }
+
+        /* 반응형 디자인 추가 */
+        @media (max-width: 1200px) {
+            #travel-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            #travel-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            #travel-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+
+        #go-back,
+        #load-more {
+            position: fixed;
+            bottom: 50px;
+            transform: translateX(-50%);
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #go-back {
+            left: 40%;
+            /* 왼쪽에 배치 */
+            margin-right: 10px;
+        }
+
+        #load-more {
+            left: 60%;
+            /* 오른쪽에 배치 */
+        }
+
+        #go-back img,
+        #load-more img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #go-back:hover,
+        #load-more:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <select id="areaCode">
+            <option value="">전체</option>
+            <option value="32">강원</option>
+            <option value="39">제주</option>
+        </select>
+
+        <select id="courseCode">
+            <option value="">전체</option>
+            <option value="c0112">#가족코스</option>
+            <option value="c0113">#나홀로코스</option>
+            <option value="c0114">#힐링코스</option>
+            <option value="c0115">#도보코스</option>
+            <option value="c0116">#캠핑코스</option>
+        </select>
+    </div>
+
+    <div id="travel-list">여행 정보를 불러오는 중입니다...</div>
+
+    <button id="go-back"><img src="./앞으로가기.png" alt="Go Back"></button>
+    <button id="load-more"><img src="./뒤로가기.png" alt="Load More"></button>
+
+    <script>
+      let currentPage = 1;
+const numOfRows = 8;
+
+function fetchTravelData() {
+    const selectedAreaCode = $("#areaCode").val();
+    const selectedCourseCode = $("#courseCode").val();
+
+    if (!selectedAreaCode) {
+        $("#travel-list").html("지역을 선택해주세요.");
+        return;
+    }
+
+    $("#travel-list").html("여행 정보를 불러오는 중입니다...");
+
+    $.ajax({
+        url: "http://apis.data.go.kr/B551011/KorService1/areaBasedList1",
+        type: "GET",
+        data: {
+            serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==",
+            MobileApp: "AppTest",
+            MobileOS: "ETC",
+            pageNo: currentPage,
+            numOfRows: numOfRows,
+            contentTypeId: 25,
+            areaCode: selectedAreaCode,
+            cat2: selectedCourseCode,
+            _type: "json"
+        },
+        success: function (response) {
+            if (response.response && response.response.body && response.response.body.items) {
+                const items = response.response.body.items.item;
+
+                if (items && items.length > 0) {
+                    let htmlContent = "";
+                    items.forEach(item => {
+                        htmlContent += `
+                            <div class="travel-card">
+                                <h3>${item.title}</h3>
+                            </div>
+                        `;
+                    });
+
+                    $("#travel-list").html(htmlContent);
+                    currentPage++;
+
+                    // "더보기" 버튼 표시 여부
+                    if (items.length === numOfRows) {
+                        $("#load-more").show();
+                    } else {
+                        $("#load-more").hide();
+                    }
+
+                    // "뒤로가기" 버튼 표시 여부
+                    if (currentPage > 2) {  // 첫 페이지에서만 숨기기
+                        $("#go-back").show();
+                    } else {
+                        $("#go-back").hide();
+                    }
+                } else {
+                    $("#travel-list").html("<p>데이터가 없습니다.</p>");
+                }
+            } else {
+                console.error("올바른 데이터 구조가 아닙니다.", response);
+                $("#travel-list").html("<p>응답 데이터 오류</p>");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("API 요청 오류:", status, error);
+            $("#travel-list").html("<p>데이터를 불러오는 중 오류가 발생했습니다.</p>");
+        }
+    });
+}
+
+// 페이지 로드 시 카드 내용 비우기
+$("#travel-list").html("여행 정보를 불러오는 중입니다...");
+
+$("#areaCode, #courseCode").change(function () {
+    currentPage = 1;
+    fetchTravelData();
+});
+
+// 더보기 버튼 클릭 시 추가 데이터 로딩
+$("#load-more").click(function () {
+    fetchTravelData();
+});
+
+// 뒤로가기 버튼 클릭 시 이전 페이지 데이터 로딩
+$("#go-back").click(function () {
+    if (currentPage > 1) {  // currentPage가 1 이상일 때만 뒤로가기 가능
+        currentPage--;  // currentPage를 1 감소시킴
+        fetchTravelData(); // 이전 페이지 데이터를 로드
+    }
+});
+
+    </script>
+</body>
+
+</html>
