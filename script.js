@@ -20,7 +20,7 @@ $(document).ready(function () {
   $(document).on("click", "#logout", function () {
     sessionStorage.setItem("loginstatus", "false");
     alert("로그아웃되었습니다.");
-    window.location.href = "Mainpage.html";
+    window.location.href = "Home.html";
   });
 });
 function loginCheck(name) {
