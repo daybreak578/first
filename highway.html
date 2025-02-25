@@ -16,12 +16,12 @@
         $(document).ready(function () {
             $("#getData").click(function () {
                 $.ajax({
-                    url: "https://data.ex.co.kr/openapi/trafficapi/trafficAll",
+                    url: "https://data.ex.co.kr/openapi/trafficapi/trafficRegion",
                     type: "GET",
                     data: {
                         key: "3762609281", // 여기에 본인 API 키 입력
                         type: "json",
-                        numOfRows: 10, // 원하는 데이터 개수
+                        numOfRows: 200, // 원하는 데이터 개수
                         pageNo: 1
                     },
                     dataType: "json",
