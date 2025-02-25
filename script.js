@@ -38,6 +38,6 @@ function loginChecka() {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
   if (loginstatus != true) {
     alert("로그인을 해주세요.");
-    window.location.href = "Mainpage.html";
+    window.location.href = "Home.html";
   } 
 }

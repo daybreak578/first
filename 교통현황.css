@@ -32,6 +32,9 @@ body{
     border: 1px;
     border-color: white;
 }
+.option:hover{
+    background-color: rgb(61, 61, 61);
+}
 .trafficcolor {
     position: absolute;
     right: 10px;
@@ -46,7 +49,7 @@ body{
     position: absolute; 
     right: 10px; 
     top: 400px; 
-    width:75%; 
+    width:50%; 
     height:50%;
 }
 .restarea{
@@ -62,4 +65,12 @@ body{
     align-items: center;
     text-decoration: none; 
     color: white;
+}
+.bar{
+    position: absolute;
+    top: 400px;
+    width: 350px;
+    left: 270px;
+    border-radius: 16px; 
+    backdrop-filter: blur(10px);
 }

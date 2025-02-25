@@ -14,7 +14,8 @@
     <h2>고속도로 정보</h2>
     <button id="getData">데이터 가져오기</button>
     <pre id="result"></pre>
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <div style="width: 400px; height: 800px;"><canvas id="myChart" width="400" height="200"></canvas></div>
+
     <script>
         //ajax
         $(document).ready(function () {
@@ -70,7 +71,7 @@
                     var r = Math.floor(Math.random() * 256);
                     var g = Math.floor(Math.random() * 256);
                     var b = Math.floor(Math.random() * 256);
-                    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + opacity + ')';
+                    return 'rgba(' + r + ', ' + g + ', ' + b + ')';
                 }
                 for (var i = 0; i < name.length; i++) {
                     // 배경색은 투명도 0.2, 테두리색은 불투명하게 생성
@@ -91,6 +92,8 @@
                         }]
                     },
                     options: {
+                        responsive: true, // 반응형 설정
+                        aspectRatio: 0.5,
                         scales: {
                             y: {
                                 beginAtZero: true // y축을 0부터 시작
