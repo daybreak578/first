@@ -27,7 +27,6 @@ $(document).ready(function () {
         regionCodes = [];
     }
   }
-
   // 교통 데이터//////////////////////////////////////////////////////////////
   function fetchTrafficData() {
     const requests = regionCodes.map(function (code) {
@@ -121,6 +120,7 @@ $(document).ready(function () {
     updateRegion(region); // 지역에 맞는 regionCodes 업데이트
     fetchTrafficData(); // 교통 데이터 요청
     updateRegionm(region); // 지도에 표시할 좌표지정
+    sessionStorage.setItem("region", region);
   });
 
   // 지역선택 버튼 클릭 시 드롭다운 메뉴 표시
@@ -165,7 +165,6 @@ $(document).ready(function () {
         mapx = 37.5665;
         mapy = 126.978;
     }
-
     let newCenter = new kakao.maps.LatLng(mapx, mapy);
     map.setCenter(newCenter); // 지도 중심을 새로운 좌표로 이동
   }
