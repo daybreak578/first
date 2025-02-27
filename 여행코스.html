@@ -5,50 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 코스 목록</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script> <!--jquery 주소변경-->
     <link rel="stylesheet" href="여행코스.css">
 </head>
 
 <body>
     <script src="script.js"></script>
     <header id="header"></header>
-
-    <div id="filter-container">
-
-        <select id="areaCode">
-            <option value="">지역 선택</option>
-            <option value="1">서울</option>
-            <option value="6">부산</option>
-            <option value="4">대구</option>
-            <option value="2">인천</option>
-            <option value="5">광주</option>
-            <option value="3">대전</option>
-            <option value="7">울산</option>
-            <option value="8">세종</option>
-            <option value="31">경기</option>
-            <option value="32">강원</option>
-            <option value="33">충북</option>
-            <option value="34">충남</option>
-            <option value="35">전북</option>
-            <option value="36">전남</option>
-            <option value="37">경북</option>
-            <option value="38">경남</option>
-            <option value="39">제주</option>
-        </select>
-
-        <select id="courseCode">
-            <option value="">코스 선택</option>
-            <option value="c0112">#가족코스</option>
-            <option value="c0113">#자전거코스</option>
-            <option value="c0115">#도보코스</option>
-            <option value="c0114">#힐링코스</option>
-            <option value="c0115">#도보코스</option>
-            <option value="c0116">#캠핑코스</option>
-        </select>
-    </div>
-
-
-    <div id="travel-list"></div>
+    <div class="travel-list" id="travel-list"></div>
 
     <script>
         let currentPage = 1;

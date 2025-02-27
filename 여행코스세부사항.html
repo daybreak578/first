@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 코스 상세 정보</title>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script> <!--jquery 주소변경-->
     <link rel="stylesheet" href="여행코스세부사항.css">
 </head>
 
@@ -21,14 +22,12 @@
         <a href="여행코스.html" class="back-btn">목록으로 돌아가기</a>
     </div>
 
-    </div>
-
     <!-- 지도 영역 -->
-    <div id="map" class="map"></div>
+    <div class="map"><div id="map" class="map"></div></div>
 
     <!-- Kakao 지도 API (defer 속성 제거) -->
     <script type="text/javascript"
-        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=351c7f5e8166ca2967f8f005df63b4ab"></script>
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a"></script>
     <script>
         window.onload = function () {
             document.getElementById("title").textContent = sessionStorage.getItem("ctitle") || "정보없음";
