@@ -108,19 +108,16 @@
             }
         }
         function timingcheck() {
-            $("#areaCode,#courseCode").change(function() {
-            const selectedAreaCode = $("#areaCode").val();
-            const selectedCourseCode = $("#courseCode").val();
-            console.log(selectedAreaCode, selectedCourseCode); 
-            console.log("asdasdasf");
-            fetchTravelData();
-        });
+            $("#areaCode,#courseCode").change(function () {
+                const selectedAreaCode = $("#areaCode").val();
+                const selectedCourseCode = $("#courseCode").val();
+                
+                fetchTravelData();
+            });
         }
         $(document).ready(function () {
             loadSavedTravelData();
-        
-       
-        console.log("skdljflskdfj")
+            
         });
         $(document).on("click", ".travel-card", function () {
             sessionStorage.setItem("ctitle", $(this).data("title"));
@@ -132,7 +129,7 @@
             window.location.href = `여행코스세부사항.html`;
         });
 
-       
+
     </script>
 
 </body>

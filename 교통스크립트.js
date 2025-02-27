@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  loginChecka();
   let regionCodes = [];
   let mapx = 37.5665; // 서울 초기 좌표
   let mapy = 126.978; // 서울 초기 좌표
