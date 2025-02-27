@@ -11,39 +11,18 @@ body {
     overflow-y: auto;
 }
 
-#filter-container {
-    position: absolute;
-    top: 40%;
-    left: 60px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-select {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
 #travel-list {
     display: grid;
+    position: absolute;
+    top: 150px;
+    left: 0px;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-    margin-top: 250px;;
-    margin-left: 300px;
-    max-width: 70%;
-    width: 70%;
+    /* max-width: 70%;
+    width: 70%; */
     overflow-y: auto;
     max-height: 80vh;
-    margin-bottom: 78px;
+    height: 530px;
+   
 }
 
 .travel-card {
@@ -58,6 +37,7 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 76%;
 }
 
 .travel-card:hover {
@@ -71,14 +51,3 @@ select {
     color: #333;
 }
 
-iframe {
-    position: fixed;
-    width: 100%;
-    bottom: 100px;
-    left: 0;
-    border: none;
-    height: 100px;
-    background-color: #fff;
-    z-index: 999;
-    margin-bottom: 10px;
-}

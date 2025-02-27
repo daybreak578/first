@@ -3,12 +3,10 @@
 
 <head>
     <link rel="stylesheet" href="header.css">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고속도로 정보 API</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 </head>
 
 <body>
@@ -17,14 +15,11 @@
         <!-- 로고 -->
         <div class="header-container">
             <a href="./Home.html"><img src="./logo.webp" alt=""></a>
-
         </div>
         <!-- 메뉴 -->
         <div class="menu">
-
             <div class="menubtn">
-                <button value="관광" onclick="loginCheck(this.value)"><img class="menu-image" src="images/관광.png"
-                        alt="관광지 이미지"></button>
+                <img class="menu-image" src="images/관광.png" alt="관광지 이미지">
                 <input type="button" id="sightseeing" value="관광" onclick="loginCheck(this.value)">
             </div>
             <div class="menubtn">
@@ -57,38 +52,6 @@
         <input class="logout" type="button" id="logout" value="로그아웃">
     </div>
 
-    <div class="sidebar">
-        <select id="areaCode">
-            <option value="">지역 선택</option>
-            <option value="1">서울</option>
-            <option value="6">부산</option>
-            <option value="4">대구</option>
-            <option value="2">인천</option>
-            <option value="5">광주</option>
-            <option value="3">대전</option>
-            <option value="7">울산</option>
-            <option value="8">세종</option>
-            <option value="31">경기</option>
-            <option value="32">강원</option>
-            <option value="33">충북</option>
-            <option value="34">충남</option>
-            <option value="35">전북</option>
-            <option value="36">전남</option>
-            <option value="37">경북</option>
-            <option value="38">경남</option>
-            <option value="39">제주</option>
-        </select>
-
-        <select id="courseCode">
-            <option value="">코스 선택</option>
-            <option value="c0112">#가족코스</option>
-            <option value="c0113">#자전거코스</option>
-            <option value="c0115">#도보코스</option>
-            <option value="c0114">#힐링코스</option>
-            <option value="c0115">#도보코스</option>
-            <option value="c0116">#캠핑코스</option>
-        </select>
-    </div>
 </body>
 
 </html>
