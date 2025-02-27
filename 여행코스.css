@@ -21,6 +21,7 @@ body {
     width: 70%; */
     overflow-y: auto;
     max-height: 80vh;
+    height: 530px;
    
 }
 
@@ -36,6 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 76%;
 }
 
 .travel-card:hover {
