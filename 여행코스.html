@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 코스 목록</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+       body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center; /* 가로 중앙 정렬 */
+      align-items: center; /* 세로 중앙 정렬 */
+      height: 100vh; /* 화면 전체 높이 사용 */
+    }
+
+        #filter-container {
+            position: absolute;
+            top: 40%;
+            left: 50px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #travel-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-left: 150px;
+            max-width: 70%;
+        }
+
+        .travel-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .travel-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+
+
+    
+    </style>
+</head>
+
+<body>
+
+    <div id="filter-container">
+
+    <select id="areaCode">
+        <option value="">지역 선택</option>
+        <option value="11">서울</option>
+        <option value="21">부산</option>
+        <option value="22">대구</option>
+        <option value="23">인천</option>
+        <option value="24">광주</option>
+        <option value="25">대전</option>
+        <option value="26">울산</option>
+        <option value="31">경기</option>
+        <option value="32">강원</option>
+        <option value="33">충북</option>
+        <option value="34">충남</option>
+        <option value="35">전북</option>
+        <option value="36">전남</option>
+        <option value="37">경북</option>
+        <option value="38">경남</option>
+        <option value="39">제주</option>
+    </select>
+
+    <select id="courseCode">
+        <option value="">코스 선택</option>
+        <option value="c0112">#가족코스</option>
+        <option value="c0115">#도보코스</option>
+        <option value="c0114">#힐링코스</option>
+        <option value="c0115">#도보코스</option>
+        <option value="c0116">#캠핑코스</option>
+    </select>
+</div>
+
+
+    <div id="travel-list"></div>
+
+    <script>
+        let currentPage = 1;
+        const numOfRows = 8;
+
+        function fetchTravelData() {
+            const selectedAreaCode = $("#areaCode").val();
+            const selectedCourseCode = $("#courseCode").val();
+
+            if (!selectedAreaCode) {
+                $("#travel-list").html("<p>지역을 선택해주세요.</p>");
+                return;
+            }
+
+            $("#travel-list").html("<p>데이터를 불러오는 중...</p>");
+
+            $.ajax({
+                url: "http://apis.data.go.kr/B551011/KorService1/areaBasedList1",
+                type: "GET",
+                data: {
+                    serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==",
+                    MobileApp: "AppTest",
+                    MobileOS: "ETC",
+                    pageNo: currentPage,
+                    numOfRows: numOfRows,
+                    contentTypeId: 25,
+                    areaCode: selectedAreaCode,
+                    cat2: selectedCourseCode,
+                    _type: "json"
+                },
+                success: function (response) {
+                    if (response.response?.body?.items?.item) {
+                        const items = response.response.body.items.item;
+                        let htmlContent = "";
+
+                        console.log(response);
+
+                        items.forEach(item => {
+                            htmlContent += `
+                                <div class="travel-card" 
+                                    data-title="${item.title}" 
+                                    data-image="${item.firstimage}"
+                                    data-addr="${item.addr1 || ''}" 
+                                    data-tel="${item.tel || ''}"                                   
+                                    data-mapx="${item.mapx || ''}" 
+                                    data-mapy="${item.mapy || ''}">                                    
+                                    <h4>${item.title}</h4>
+                                </div>
+                            `;
+                        });
+
+                        $("#travel-list").html(htmlContent);
+
+                        
+
+                       
+
+                          // 검색 결과를 localStorage에 저장
+                          sessionStorage.setItem("travelList", JSON.stringify(items));
+                          sessionStorage.setItem("selectedAreaCode", selectedAreaCode);
+                          sessionStorage.setItem("selectedCourseCode", selectedCourseCode);
+                        
+                    } else {
+                        $("#travel-list").html("<p>여행 코스를 찾을 수 없습니다.</p>");
+                    }
+                },
+                error: function () {
+                    $("#travel-list").html("<p>데이터 불러오기 오류</p>");
+                }
+            });
+        }
+
+         // 페이지 로드 시 저장된 데이터를 불러옴
+         function loadSavedTravelData() {
+            const savedAreaCode =    sessionStorage.getItem("selectedAreaCode");
+            const savedCourseCode =    sessionStorage.getItem("selectedCourseCode");
+            const savedTravelList =    sessionStorage.getItem("travelList");
+
+            if (savedAreaCode) $("#areaCode").val(savedAreaCode);
+            if (savedCourseCode) $("#courseCode").val(savedCourseCode);
+
+            if (savedTravelList) {
+                const items = JSON.parse(savedTravelList);
+                let htmlContent = "";
+
+                items.forEach(item => {
+                    htmlContent += `
+                        <div class="travel-card" 
+                            data-title="${item.title}" 
+                            data-image="${item.firstimage || ''}"
+                            data-addr="${item.addr1 || ''}" 
+                            data-tel="${item.tel || ''}"                                   
+                            data-mapx="${item.mapx || ''}" 
+                            data-mapy="${item.mapy || ''}">                                    
+                            <h4>${item.title}</h4>
+                        </div>
+                    `;
+                });
+
+                $("#travel-list").html(htmlContent);
+            }
+        }
+
+        $(document).ready(function () {
+            loadSavedTravelData();
+        });
+
+        $(document).on("click", ".travel-card", function () {
+            const title = $(this).data("title");
+            const addr = $(this).data("addr");
+            const tel = $(this).data("tel");
+            const image = $(this).data("image");
+            const mapX = $(this).data("mapx");
+            const mapY = $(this).data("mapy");
+
+            const queryString = `title=${encodeURIComponent(title)}&addr=${encodeURIComponent(addr)}&tel=${encodeURIComponent(tel)}&image=${encodeURIComponent(image)}&mapX=${mapX}&mapY=${mapY}`;
+            window.location.href = `여행코스세부사항.html?${queryString}`;
+        });
+
+        $("#areaCode, #courseCode").change(fetchTravelData);
+        
+        </script>
+
+</body>
+
+</html>

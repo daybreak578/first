@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 코스 상세 정보</title>
+    <link rel="stylesheet" href="여행코스세부사항.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin-top: 9%;
+      }
+      
+      .travel-detail {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin-right: 20px;
+    text-align: center; /* 내부 요소들을 가운데 정렬 */
+}
+      
+      .travel-detail h2 {
+        font-size: 24px;
+        margin: 0 0 10px;
+      }
+      
+      .travel-detail img {
+    max-width: 80%;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 10px; /* 아래쪽 여백 추가 */
+}
+
+      
+      .travel-detail p {
+        font-size: 16px;
+        color: #333;
+      }
+      
+      .back-btn {
+    display: block; /* 버튼을 블록 요소로 설정 */
+    width: 150px; /* 버튼의 너비 설정 */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px auto; /* 위아래 마진 추가 및 가로 중앙 정렬 */
+    text-align: center;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
+      
+      #map {
+        flex: 1;
+        height: 350px;
+        border-radius: 8px;
+      }
+      
+      .map-container {
+        flex: 1;
+        height: 500px;
+        position: relative;
+      
+      }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="travel-detail">
+        <h2 id="title">여행 코스 정보</h2>
+        <p><strong>주소:</strong> <span id="addr">정보 없음</span></p>
+        <p><strong>전화번호:</strong> <span id="tel">정보 없음</span></p>
+        <img id="image" src="" alt="이미지 없음">
+        <a href="여행코스.html" class="back-btn">목록으로 돌아가기</a>
+        </div>
+        
+    </div>
+
+    <!-- 지도 영역 -->
+    <div id="map" class="map-container"></div>
+
+    <!-- Kakao 지도 API (defer 속성 제거) -->
+    <script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a&libraries=services">
+    </script>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                title: params.get("title") || "정보 없음",
+                addr: params.get("addr") || "정보 없음",
+                tel: params.get("tel") || "정보 없음",
+                image: params.get("image") !== "undefined" ? params.get("image") : null,
+                mapX: parseFloat(params.get("mapX")),
+                mapY: parseFloat(params.get("mapY"))
+            };
+        }
+
+        window.onload = function () {
+            const data = getQueryParams();
+            document.getElementById("title").textContent = data.title;
+            document.getElementById("addr").textContent = data.addr;
+            document.getElementById("tel").textContent = data.tel;
+
+            const imageElement = document.getElementById("image");
+            if (data.image) {
+                imageElement.src = data.image;
+            } else {
+                imageElement.style.display = "none"; // 이미지 없을 경우 숨김
+            }
+
+            if (!data.mapX || !data.mapY) {
+                console.error("좌표 데이터가 없습니다.");
+                return;
+            }
+
+            // Kakao 지도 API가 완전히 로드된 후 실행
+            kakao.maps.load(function () {
+                let mapContainer = document.getElementById('map');
+                let mapOption = {
+                    center: new kakao.maps.LatLng(data.mapY, data.mapX),
+                    level: 3
+                };
+
+                let map = new kakao.maps.Map(mapContainer, mapOption);
+
+                let marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(data.mapY, data.mapX)
+                });
+
+                marker.setMap(map);
+            });
+        };
+    </script>
+
+</body>
+
+</html>
