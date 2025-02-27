@@ -1,0 +1,60 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin-top: 9%;
+}
+
+.travel-detail {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  margin-right: 20px;
+  text-align: center; /* 내부 요소들을 가운데 정렬 */
+}
+
+.travel-detail h2 {
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.travel-detail img {
+  max-width: 80%;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 10px; /* 아래쪽 여백 추가 */
+}
+
+.travel-detail p {
+  font-size: 16px;
+  color: #333;
+}
+
+.back-btn {
+  display: block; /* 버튼을 블록 요소로 설정 */
+  width: 150px; /* 버튼의 너비 설정 */
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px auto; /* 위아래 마진 추가 및 가로 중앙 정렬 */
+  text-align: center;
+}
+
+.back-btn:hover {
+  background-color: #0056b3;
+}
+
+.map {
+  flex: 1;
+  height: 350px;
+  border-radius: 8px;
+  width: 400px;
+}
