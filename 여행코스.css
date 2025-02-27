@@ -8,7 +8,7 @@ body {
     align-items: flex-start;
     flex-direction: column;
     height: 100vh;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 #travel-list {
