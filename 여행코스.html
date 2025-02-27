@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>여행 코스 목록</title>
+    <title>여행코스</title>
     <script type="text/javascript" src="./jquery-3.7.1.min.js"></script> <!--jquery 주소변경-->
     <link rel="stylesheet" href="여행코스.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <script src="script.js"></script>
     <header id="header"></header>
     <div class="travel-list" id="travel-list"></div>
 
     <script>
         let currentPage = 1;
         const numOfRows = 99;
-
+        callCheck = true;
         function fetchTravelData() {
             const selectedAreaCode = $("#areaCode").val();
             const selectedCourseCode = $("#courseCode").val();
@@ -44,11 +44,10 @@
                     _type: "json"
                 },
                 success: function (response) {
-                    if (response.response?.body?.items?.item) {
+                    console.log(response);
+                    if (response.response.body.items.item) {
                         const items = response.response.body.items.item;
                         let htmlContent = "";
-
-                        console.log(response);
 
                         items.forEach(item => {
                             htmlContent += `
@@ -76,6 +75,7 @@
                 },
                 error: function () {
                     $("#travel-list").html("<p>데이터 불러오기 오류</p>");
+                    console.log("실패")
                 }
             });
         }
@@ -107,8 +107,20 @@
                 $("#travel-list").html(htmlContent);
             }
         }
+        function timingcheck() {
+            $("#areaCode,#courseCode").change(function() {
+            const selectedAreaCode = $("#areaCode").val();
+            const selectedCourseCode = $("#courseCode").val();
+            console.log(selectedAreaCode, selectedCourseCode); 
+            console.log("asdasdasf");
+            fetchTravelData();
+        });
+        }
         $(document).ready(function () {
             loadSavedTravelData();
+        
+       
+        console.log("skdljflskdfj")
         });
         $(document).on("click", ".travel-card", function () {
             sessionStorage.setItem("ctitle", $(this).data("title"));
@@ -120,8 +132,7 @@
             window.location.href = `여행코스세부사항.html`;
         });
 
-        $("#areaCode, #courseCode").change(fetchTravelData);
-
+       
     </script>
 
 </body>
