@@ -2,76 +2,60 @@
 <html>
 
 <head>
-	<script type="text/javascript" src="../jquery-3.7.1.min.js"></script> <!--jquery 주소변경-->
+	<script type="text/javascript" src="../jquery-3.7.1.min.js"></script>
+	<body style="align-content: center; background-image: url('images/메인배경.jpg'); background-size: 1280px 800px; background-repeat: no-repeat;"></body>
 	<style type="text/css">
-		.menubtnmain {
-			width: 100px;
-			height: 30px;
-			border-radius: 8px;
-			background-color: white;
-			font-size: 20px;
-			border: none;
-		}
-
-		.menubtnmain:hover {
-			background-color: rgb(238, 237, 237);
-			cursor: pointer;
-		}
-
-		.menubtn {
-			width: 100px;
-			height: 30px;
-			border-radius: 8px;
-			background-color: transparent;
-			font-size: 20px;
-			border: none;
-		}
-
-		.menubtn:hover {
-			cursor: pointer;
-		}
-
-		.menu {
-			display: flex;
-			/* 버튼들을 가로로 배치 */
-			justify-content: center;
-			/* 버튼들을 가로로 중앙 배치 */
-			text-align: center;
-		}
+		#idarea, #pwarea, #name, #pwarea2{
+        width: 80%;
+        height: 40px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    	}
 
 		.centerdiv {
-			display: flex;
-			border-radius: 16px;
-			justify-content: center;
-			/* 수평 중앙 정렬 */
-			align-items: center;
-			/* 수직 중앙 정렬 */
-			position: absolute;
-			top: 300px;
-			/* 수직 위치 유지 */
-			left: 50%;
-			/* 수평 중앙 정렬 */
-			transform: translateX(-50%);
-			/* 정확한 중앙 정렬 */
-			width: 400px;
-			height: 400px;
-			backdrop-filter: blur(6px);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		position: absolute;
+		top: 260px; 
+		left: 50%;
+		transform: translateX(-50%);
+		width: 350px; 
+		height: auto;
+		background-color: white;
+		border-radius: 16px;
+		padding: 20px;
 		}
 
+		.centerdiv h2 {
+			margin-top: 0;  
+		}
+
+		.centerdiv h3 {
+			margin-top: 10px;  
+			margin-bottom: 10px;
+		}
+
+
 		.joinbtn {
-			font-size: 20px;
+			font-size: 15px;
 			font-weight: bold;
-			position: absolute;
-			top: 400px;
-			left: 40px;
-			width: 600px;
-			height: 60px;
+			width: 80%;
+			height: 50px;
 			border-radius: 12px;
 			background-color: black;
 			color: white;
 			border: none;
+			margin-top: 20px;
 		}
+
+		.joinbtn:hover {
+			background-color: rgb(248, 249, 250);
+		}
+
 	</style>
+
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#complete").on("click", function () {
@@ -102,22 +86,34 @@
 
 <body style=" background-image: url('./back.webp'); background-size: cover;">
 	<script src="script.js"></script>
-	<header id="header">
+	<header id="headerhome">
 	</header>
-	<div class="centerdiv" style="position: absolute; top: 360px; width: 700px; height: 490px; ">
-		<h1 style="position: absolute; top: 20px; left: 40px; color: rgb(0, 0, 0);">회원가입을 해주세요.</h1>
-		<h2 style="position: absolute; top: 90px; left: 40px; color: rgb(0, 0, 0);">이름</h2>
-		<input type="text" id="name" style="position: absolute; top: 140px; left: 40px; width: 600px; height: 40px; border-radius: 12px;">
-		<h2 style="position: absolute; top: 160px; left: 40px; color: rgb(0, 0, 0);">ID</h2>
-		<input type="text" id="id" style="position: absolute; top: 210px; left: 40px; width: 600px; height: 40px; border-radius: 12px;">
-		<h2 style="position: absolute; top: 230px; left: 40px; color: rgb(0, 0, 0);">Password</h2>
-		<input type="password" id="pw" style="position: absolute; top: 280px; left: 40px; width: 600px; height: 40px; border-radius: 12px;">
-		<h2 style="position: absolute; top: 300px; left: 40px; color: rgb(0, 0, 0);">Password Confirm</h2>
-		<input type="password" id="pw2" style="position: absolute; top: 350px; left: 40px; width: 600px; height: 40px; border-radius: 12px;">
-		<input type="button" class="joinbtn" id="complete" value="회원가입">
-	</div>
-	<script>
+		<div class="centerdiv">
+			<h2>
+				회원가입
+			</h2>
+			<h3>
+				이름
+			</h3>
+			<input type="text" id="name">
+			<h3>
+				ID
+			</h3>
+			<input type="text" id="idarea">
+			<h3>
+				Password
+			</h3>
+			<input type="password" id="pwarea">
+			<h3>
+				Password Confirm
+			</h3>
+			<input type="password" id="pwarea2">
+			<input type="button" class="joinbtn" id="joinbtn" value="회원가입">
+		</div>
 
+		
+
+	<script>
 	</script>
 </body>
 

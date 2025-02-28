@@ -46,43 +46,76 @@ header {
     display: flex;
     justify-content: center;
     gap: 10px;
-    position: absolute; 
-    bottom: 5px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    z-index: 1010; 
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1010;
 }
 
 .menubtn button {
-    background: none;
-    border: none;
+    background: #f0f0f0;;
+    border: 2px solid #ccc;
     padding: 10px 15px;
     cursor: pointer;
     outline: none;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70px; 
-    height: 100px; 
-    margin-bottom: 5px;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center; 
+    width: 120px;
+    height: 100px;
 }
 
+.menubtn button:hover {
+    background: #e0e0e0; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+}
 
 .menu-image {
     width: 40px;
     height: 40px;
-    margin-bottom: 5px;
+    margin-bottom: 5px; 
 }
 
 .menu-text {
-    font-size: 16px;
+    font-size: 15px;
     color: rgb(10, 1, 1);
     font-weight: bold;
+    text-align: center;
     white-space: nowrap; 
     text-overflow: ellipsis; 
-    overflow: hidden; 
-    text-align: center; 
+    overflow: hidden;
+    line-height: 1.2; /* 텍스트 세로 정렬 */
 }
+
+/* 사이드바 */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    top: 150px;
+    left: 0;
+    background-color: #94bfe2;
+    padding-top: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 로그인 영역 */
+#login-area {
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    display: flex; 
+    gap: 10px; 
+    z-index: 1020;
+}
+
+
+
 
 /* 로그인 영역 */
 #login-area {
