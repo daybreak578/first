@@ -30,15 +30,15 @@ header {
 
 }
 
-.welcome-text {
-    font-size: 20px; /* 텍스트 크기 */
-    color: #333; /* 텍스트 색상 */
+#welcome-text {
+    font-size: 23px; 
+    color: #333; 
     font-weight: bold;
-    position: absolute; /* 헤더 내에서 절대 위치 지정 */
-    top: 60px; /* 상단으로부터의 위치 */
-    left: 50%; /* 화면 가운데 정렬 */
-    transform: translateX(-50%); /* 정확한 중앙 정렬 */
-    z-index: 1001; /* 메뉴 위로 표시 */
+    position: relative; 
+    top: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1001; 
 }
 
 /* 메뉴바 */
@@ -54,28 +54,23 @@ header {
 }
 
 .menubtn button {
-    background: #f0f0f0;;
-    border: 2px solid #ccc;
-    padding: 10px 15px;
+    background: none;
+    border: none;
+    padding: 5px 5px;
     cursor: pointer;
     outline: none;
     display: flex;
     flex-direction: row;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center; /* 중앙 정렬 */
+    justify-content: center; /* 세로로 중앙 정렬 */
     width: 120px;
     height: 100px;
-}
-
-.menubtn button:hover {
-    background: #e0e0e0; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
 }
 
 .menu-image {
     width: 40px;
     height: 40px;
-    margin-bottom: 5px; 
+    margin-bottom: 5px; /* 이미지와 텍스트 사이의 간격 */
 }
 
 .menu-text {
@@ -88,6 +83,7 @@ header {
     overflow: hidden;
     line-height: 1.2; /* 텍스트 세로 정렬 */
 }
+
 
 /* 사이드바 */
 .sidebar {
@@ -144,14 +140,18 @@ header {
 
 /* 로그아웃 버튼 */
 .logout {
-    background-color: #3586bb;
+    background-color: #7095c5b2;
     border: none;
     padding: 8px 15px;
     border-radius: 8px;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: relative;  /* 절대 위치 설정 */
+    top: 50px;           /* 상단 위치 */
+    right: 50px;         /* 오른쪽 끝으로 위치 */
+    z-index: 1002;  
 }
 
 .logout:hover {
@@ -277,35 +277,4 @@ body {
     #travel-list {
         grid-template-columns: 1fr;
     }
-}
-
-/* 버튼 스타일 */
-#go-back,
-#load-more {
-    position: fixed;
-    bottom: 50px;
-    transform: translateX(-50%);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: none;
-}
-
-#go-back {
-    left: 40%;
-}
-
-#load-more {
-    left: 60%;
-}
-
-#go-back img,
-#load-more img {
-    width: 40px;
-    height: 40px;
-}
-
-#go-back:hover,
-#load-more:hover {
-    opacity: 0.8;
 }
