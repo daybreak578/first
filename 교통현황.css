@@ -61,14 +61,14 @@ body {
     box-sizing: border-box;  
 }
 
-.traffic-text {
+.low-traffic-text {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
     color: green;
 }
 
-.traffic-line {
+.low-traffic-line {
     width: 80%;  
     height: 3px;  
     background-color: green;
