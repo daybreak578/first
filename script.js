@@ -50,8 +50,16 @@ function loginCheck(name) {
   }
 }
 function move(name) {
-  window.location.href = `${name}.html`;
+  // 현재 페이지와 이동할 페이지가 다르면 데이터 초기화
+  let currentPage = sessionStorage.getItem("pagestatus");
+  if (currentPage !== name) {
+    sessionStorage.removeItem("travelList"); // 여행 데이터 초기화
+    sessionStorage.removeItem("selectedAreaCode"); // 선택한 지역 초기화
+    sessionStorage.removeItem("selectedCourseCode"); // 선택한 코스 초기화
+  }
+
   sessionStorage.setItem("pagestatus", name);
+  window.location.href = `${name}.html`;
 }
 function loginChecka() {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
