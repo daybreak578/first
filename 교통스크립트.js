@@ -3,6 +3,7 @@ $(document).ready(function () {
   let regionCodes = [];
   let mapx = 37.5665; // 서울 초기 좌표
   let mapy = 126.978; // 서울 초기 좌표
+  let myChart;
   // 지역데이터//////////////////////////////////////////////////////////
   function updateRegion(region) {
     switch (region) {
@@ -82,9 +83,12 @@ $(document).ready(function () {
           borderColors.push("black");
         }
 
+        if (myChart) {
+          myChart.destroy();
+        }
         // 차트 생성/////////////////////////////////////////////////////////////////
         let ctx = document.getElementById("myChart").getContext("2d");
-        let myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
           type: "bar", // 차트 종류를 bar로 설정
           data: {
             labels: name, // x축 레이블
@@ -115,16 +119,14 @@ $(document).ready(function () {
       });
   }
 
-  
-  $(document).on('change', '#areaCode', function () {
+  $(document).on("change", "#areaCode", function () {
     $("#bardiv").show();
     let region = $("#areaCode").val();
     updateRegion(region); // 지역에 맞는 regionCodes 업데이트
     fetchTrafficData(); // 교통 데이터 요청
     updateRegionm(region); // 지도에 표시할 좌표지정
     sessionStorage.setItem("region", region);
- });
-
+  });
 
   //1. 버튼 선택시 값이 넘어가게함
   function updateRegionm(region) {
