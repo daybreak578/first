@@ -123,8 +123,9 @@
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function () {       
             loadSavedTravelData();
+            
         });
         $(document).on("click", ".travel-card", function () {
             sessionStorage.setItem("ctitle", $(this).data("title"));
