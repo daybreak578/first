@@ -22,6 +22,7 @@
     <script>
         let currentPage = 1;
         const numOfRows = 99;
+        callCheck = true;
 
         function fetchTravelData() {
             const selectedAreaCode = $("#areaCode").val();
@@ -112,6 +113,16 @@
                 $("#travel-list").html(htmlContent);
             }
         }
+
+        function timingcheck() {
+            $("#areaCode,#courseCode").change(function () {
+                const selectedAreaCode = $("#areaCode").val();
+                const selectedCourseCode = $("#courseCode").val();
+                
+                fetchTravelData();
+            });
+        };
+        
         $(document).ready(function () {
             loadSavedTravelData();
         });
