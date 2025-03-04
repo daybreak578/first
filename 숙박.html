@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>여행 코스 목록</title>
+    <title>숙박업소</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="여행코스.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <script src="script.js"></script>
-    <header id="header"></header>
+      <header id="header"></header>
 
     <div id="filter-container">
     </div>
@@ -113,14 +113,6 @@
                 });
                 $("#travel-list").html(htmlContent);
             }
-        }
-        function timingcheck() {
-            $("#areaCode,#courseCode").change(function () {
-                const selectedAreaCode = $("#areaCode").val();
-                const selectedCourseCode = $("#courseCode").val();
-                
-                fetchTravelData();
-            });
         }
         $(document).ready(function () {
             loadSavedTravelData();
