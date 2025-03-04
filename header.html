@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>헤더</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 </head>
 
 <body>
@@ -21,7 +20,7 @@
         <!-- 메뉴 -->
         <div class="menu">
             <div class="menubtn">
-                <button value="관광지" onclick="loginCheck(this.value)">
+                <button class="관광" onclick="loginCheck(this.value)">
                     <img class="menu-image" src="images/관광.png" alt="관광지 이미지">
                     <span class="menu-text">관광</span>
                 </button>
@@ -64,7 +63,6 @@
             </div>
         </div>
     </header>
-    
 
     <!-- 로그인 -->
     <div id="login-area">
@@ -95,24 +93,49 @@
             <option value="38">경남</option>
             <option value="39">제주</option>
         </select>
-<!-- 
-1.밸류를 선택한 페이지마다 다르게
-2. 갯수도 선택한 페이지마다 다르게 (show hide 사용)
--->
+        
         <select id="courseCode">
-            <option  value="">코스 선택</option>
-            <option id="opt1" value="">#가족코스</option>
-            <option id="opt2" value="">#자전거코스</option>
-            <option id="opt3" value="">#도보코스</option>
-            <option id="opt4" value="">#힐링코스</option>
-            <option id="opt5" value="">#도보코스</option>
-            <option id="opt6" value="">#캠핑코스</option>
-            <option id="opt7" value="">#캠핑코스</option>
-            <option id="opt8" value="">#캠핑코스</option>
-            <option id="opt9" value="">#캠핑코스</option>
-            <option id="opt10" value="">#캠핑코스</option>
+            <option value="">코스 선택</option>
+            <option value="">#가족코스</option>
+            <option value="">#자전거코스</option>
+            <option value="">#도보코스</option>
+            <option value="">#힐링코스</option>
+            <option value="">#도보코스</option>
+            <option value="">#캠핑코스</option>
         </select>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 메뉴 클릭 시 active 클래스 추가
+            $('.menubtn button').click(function() {
+                // 모든 버튼에서 'active' 클래스 제거
+                $('.menubtn button').removeClass('active');
+    
+                // 클릭한 버튼에 'active' 클래스 추가
+                $(this).addClass('active');
+    
+                // 로컬 스토리지에 클릭된 메뉴 저장
+                localStorage.setItem('activeMenu', $(this).val());
+    
+                // 페이지 이동 (현재 버튼 값으로 이동)
+                window.location.href = $(this).val() + '.html';
+            });
+    
+            // 페이지 로드 시 저장된 메뉴 상태를 확인하고 해당 버튼에 'active' 클래스 적용
+            var activeMenu = localStorage.getItem('activeMenu');
+            if (activeMenu) {
+                // 저장된 메뉴 값에 해당하는 버튼을 찾아서 active 클래스를 추가
+                $('button[value="' + activeMenu + '"]').addClass('active');
+            } else {
+                // 로컬 스토리지에 저장된 값이 없다면 기본 메뉴 상태를 설정할 수도 있음
+                // 예: 첫 번째 메뉴에 기본값으로 active 클래스 추가
+                $('.menubtn button').first().addClass('active');
+            }
+        });
+    </script>
+    
+    
 </body>
 
 </html>
