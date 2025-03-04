@@ -61,7 +61,7 @@ header {
 
 .menubtn button {
     background: #ffffff;
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 10px;
     cursor: pointer;
     outline: none;
@@ -198,7 +198,7 @@ header {
     font-size: 16px;
     padding: 10px;
     margin-top: 10px;
-    width: 150px;
+    width: 170px;
     text-align: center;
 }
 
@@ -210,10 +210,21 @@ header {
     font-size: 16px;
     padding: 10px;
     margin-top: 10px;
-    width: 150px;
+    width: 170px;
     text-align: center;
 }
 
+#rest-area {
+    background-color: #f7f2f2;
+    color: #000105;
+    border: 1px solid #faf5f5;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 150px;
+    text-align: center;
+}
 #courseCode option {
     padding: 10px;
     margin-top: 50px;

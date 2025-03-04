@@ -120,6 +120,16 @@
                 $("#travel-list").html(htmlContent);
             }
         }
+
+        function timingcheck() {
+            $("#areaCode,#courseCode").change(function () {
+                const selectedAreaCode = $("#areaCode").val();
+                const selectedCourseCode = $("#courseCode").val();
+                
+                fetchTravelData();
+            });
+        };
+        
         $(document).ready(function () {
             loadSavedTravelData();
         });
