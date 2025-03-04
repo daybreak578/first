@@ -41,6 +41,9 @@ $(document).ready(function () {
     window.location.href = "Home.html";
   });
 });
+function dataPass() {
+  sessionStorage.setItem("stdRestCd",this.stdRestCd);
+}
 function loginCheck(name) {
   let loginstatus = sessionStorage.getItem("loginstatus") === "true";
   if (loginstatus == true) {

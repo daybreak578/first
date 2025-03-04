@@ -6,140 +6,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script> <!--jquery 주소변경-->
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
+
 </head>
+
 <body>
     <script src="script.js"></script>
-    <!-- <script src="근처휴게소.js"></script> -->
-    <header id="header"></header>
-    <!-- 지도불러오기 -->
+    <header id="headerhome"></header>
     <section>
         <div id="map" class="map"></div>
     </section>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=48750a8a5af91cf03bd7e0c001a0bd4a"></script>
     <script>
-        var positions = new Array();
-        // 서울
-        var positionSeoul = [
-        { title: "서울만남휴게소", latlng: new kakao.maps.LatLng(37.459939, 127.042514)},
-        { title: "서울하이패스센터쉼터", latlng: new kakao.maps.LatLng(37.372309, 127.102965)},
-        ];
 
-        var positionGyeonggi = [
-        { title: "죽전휴게소", latlng: new kakao.maps.LatLng(37.332583, 127.104397)},
-        { title: "기흥휴게소", latlng: new kakao.maps.LatLng(37.23509, 127.10519)},
-        { title: "기흥복합휴게소",latlng: new kakao.maps.LatLng(37.235102, 127.105204)},
-        ];
+        $(document).ready(function () {
+            let allData = [];
+            let totalPages = 3; // 페이지 수, 원하는 만큼 반복합니다.
+            let requestsCompleted = 0; // 페이지 동기화 맞추려고 넣은 변수
 
-        var positionChungcheong = [
-        { title: "안성휴게소", latlng: new kakao.maps.LatLng(37.076443, 127.1318)},
-        { title: "천안삼거리휴게소",latlng: new kakao.maps.LatLng(36.787745, 127.173104)},
-        { title: "옥천휴게소", latlng: new kakao.maps.LatLng(36.2975, 127.59876)},
-        { title: "황간휴게소", latlng: new kakao.maps.LatLng(36.249393, 127.85455)},
-        { title: "추풍령휴게소", latlng: new kakao.maps.LatLng(36.200126, 128.0029)},
-        { title: "청주휴게소", latlng: new kakao.maps.LatLng(36.716001, 127.348115)},
-        { title: "망향휴게소", latlng: new kakao.maps.LatLng(36.854892, 127.181208)},
-        { title: "옥산휴게소", latlng: new kakao.maps.LatLng(36.656988, 127.370696)},
-        { title: "천안호두휴게소",latlng: new kakao.maps.LatLng(36.730575, 127.264077)},
-        { title: "금강휴게소", latlng: new kakao.maps.LatLng(36.279109, 127.671587)},
-        { title: "추풍령휴게소",latlng: new kakao.maps.LatLng(36.200481, 128.000838)},
-        { title: "옥천만남휴게소",latlng: new kakao.maps.LatLng(36.309081, 127.571338)},
-        ];
+            for (let i = 1; i <= totalPages; i++) {
+                $.ajax({
+                    url: "https://data.ex.co.kr/openapi/locationinfo/locationinfoRest",
+                    type: "GET",
+                    data: {
+                        key: "3762609281",
+                        type: "json",
+                        numOfRows: 99,
+                        pageNo: i,
+                        inoutType: 0,
+                    },
+                    success: function (response) {
+                        allData = allData.concat(response.list);
+                        console.log(response); // 각 요청의 응답을 콘솔에 출력
+                        // console.log(response.list[0].unitName);
 
-        var positionGangwon = [
-        { title: "강릉휴게소",latlng: new kakao.maps.LatLng(37.757987, 128.806307)},
-        { title: "홍천강휴게소",latlng: new kakao.maps.LatLng(37.712641, 127.827433)},
-        { title: "원주휴게소",latlng: new kakao.maps.LatLng(37.434678, 127.931495)},
-        { title: "홍천휴게소",latlng: new kakao.maps.LatLng(37.916366, 128.287173)},
-        { title: "양양휴게소",latlng: new kakao.maps.LatLng(37.601565, 129.074237)},
-        { title: "동해휴게소",latlng: new kakao.maps.LatLng(37.953022, 128.752777)},
-        { title: "구정휴게소",latlng: new kakao.maps.LatLng(37.722470, 128.851470)},
-        ];
-
-        var positionGyeongsang = [
-        { title: "칠곡휴게소", latlng: new kakao.maps.LatLng(36.012173, 128.430326) },
-        { title: "경산휴게소", latlng: new kakao.maps.LatLng(35.878589, 128.809738) },
-        { title: "진영휴게소", latlng: new kakao.maps.LatLng(35.279663, 128.716021) },
-        { title: "진영휴게소", latlng: new kakao.maps.LatLng(35.278282, 128.71565) },
-        { title: "문산휴게소", latlng: new kakao.maps.LatLng(35.171422, 128.152339) },
-        { title: "사천휴게소", latlng: new kakao.maps.LatLng(35.07468, 128.012612) },
-        { title: "사천휴게소", latlng: new kakao.maps.LatLng(35.073585, 128.010769) },
-        { title: "진주휴게소", latlng: new kakao.maps.LatLng(35.160064, 128.121951) },
-        { title: "함안휴게소", latlng: new kakao.maps.LatLng(35.293779, 128.346804) },
-        { title: "함안휴게소", latlng: new kakao.maps.LatLng(35.294139, 128.344495) },
-        { title: "논공휴게소", latlng: new kakao.maps.LatLng(35.76715, 128.40367) },
-        { title: "논공휴게소", latlng: new kakao.maps.LatLng(35.76516, 128.402709) },
-        ];
-
-        var positionJeolla = [
-        {title: "보성녹차휴게소",latlng: new kakao.maps.LatLng(34.813993, 127.126007)},
-        {title: "보성녹차휴게소",latlng: new kakao.maps.LatLng(34.807645, 127.180953)},
-        {title: "죽산휴게소", latlng: new kakao.maps.LatLng(35.53256,127.7579)},
-        {title: "함평나비휴게소",latlng: new kakao.maps.LatLng(35.037563,126.511596)},
-        {title: "함평나비휴게소",latlng: new kakao.maps.LatLng(35.037959,126.508996)},
-        {title: "섬진강휴게소",latlng: new kakao.maps.LatLng(34.985026,127.769158)},
-        {title: "섬진강휴게소",latlng: new kakao.maps.LatLng(34.984832,127.770276)},
-        ];
-
-        region = sessionStorage.getItem("region");
-        console.log(region)
-        switch (region) {
-        case "서울":
-            mapx = 37.5665;
-            mapy = 126.978;
-            positions = positionSeoul;
-            break;
-        case "경기":
-            mapx = 37.2636;
-            mapy = 127.0286;
-            positions = positionGyeonggi;
-
-            break;
-        case "강원":
-            mapx = 37.8836;
-            mapy = 127.7295;
-            positions = positionGangwon;
-            break;
-        case "충청":
-            mapx = 36.3504;
-            mapy = 127.3845;
-            positions = positionChungcheong;
-            break;
-        case "경상":
-            mapx = 35.8714;
-            mapy = 128.6014;
-            positions = positionGyeongsang;
-            break;
-        case "전라":
-            mapx = 35.824;
-            mapy = 127.148;
-            positions = positionJeolla;
-            break;
-        default:
-            mapx = 37.5665;
-            mapy = 126.978;
-            positions = positionJeolla;
+                        requestsCompleted++;
+                        if (requestsCompleted === totalPages) {
+                            console.log(allData); // 모든 데이터를 합친 후 출력
+                            passData(allData);
+                        }
+                    },
+                    error: function () {
+                        console.error("API 요청 실패");
+                    }
+                });
+            }
+        });
+        //4. 코드분류stdRestCd
+        //5. 코드 넘겨줌stdRestCd
+        var positions = [];
+        function passData(data) {
+            for (let i = 0; i < data.length; i++) {
+                positions.push({
+                    content: '<div>' + data[i].unitName + '</div>'+'<a href="이름.html?stdRestCd=' + encodeURIComponent(data[i].stdRestCd) + '">상세정보보기</a>',
+                    latlng: new kakao.maps.LatLng(parseFloat(data[i].yValue), parseFloat(data[i].xValue)),
+                    stdRestCd: data[i].stdRestCd
+                });
+            }
+            console.log(positions)
+            createMap()
         }
-       
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-            mapOption = {
-                center: new kakao.maps.LatLng(mapx, mapy), // 지도의 중심좌표
-                level: 11 // 지도의 확대 레벨
-            };
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        function createMap() {
 
-        for (var i = 0; i < positions.length; i++) {
-            var imageSize = new kakao.maps.Size(24, 35);
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: positions[i].latlng,
-                title: positions[i].title,
-                image: markerImage
-            });
+            region = sessionStorage.getItem("region");
+            console.log(region)
+            console.log("Selected region: " + region);
+            let mapx, mapy;
+            switch (region) {
+                case "서울":
+                    mapx = 37.5665;
+                    mapy = 126.978;
+                    break;
+                case "경기":
+                    mapx = 37.2636;
+                    mapy = 127.0286;
+                    break;
+                case "강원":
+                    mapx = 37.8836;
+                    mapy = 127.7295;
+                    break;
+                case "충청":
+                    mapx = 36.3504;
+                    mapy = 127.3845;
+                    break;
+                case "경상":
+                    mapx = 35.8714;
+                    mapy = 128.6014;
+                    break;
+                case "전라":
+                    mapx = 35.824;
+                    mapy = 127.148;
+                    break;
+                default:
+                    mapx = 37.5665;
+                    mapy = 126.978;
+            }
+            //지도만들기///////////////////////////////////////////////
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+                mapOption = {
+                    center: new kakao.maps.LatLng(mapx, mapy), // 지도의 중심좌표
+                    level: 11 // 지도의 확대 레벨
+                };
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+            for (var i = 0; i < positions.length; i++) {
+                // 마커를 생성합니다
+            
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: positions[i].latlng, // 마커의 위치
+                    clickable: true
+                });
+
+                // 마커에 표시할 인포윈도우를 생성합니다 
+                var iwContent = '<div style="padding:5px;">' + positions[i].content + '</div>', // 각 마커에 맞는 내용
+                    iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+                // 인포윈도우를 생성합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: iwContent,
+                    removable: iwRemoveable
+                });
+
+           
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', (function (marker, infowindow) {
+                    return function () {
+                        // 마커 위에 인포윈도우를 표시합니다
+                        infowindow.open(map, marker);
+                    };
+                })(marker, infowindow));
+            }
         }
+
+
     </script>
 </body>
 
