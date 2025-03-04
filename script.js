@@ -109,9 +109,9 @@ function pageopt() {
   } else if (pagestatus === "레포츠") {
     $("#opt5,#opt6,#opt7,#opt8,#opt9,#opt10").hide();
     $("#opt1").val("A0302").text("#육상레포츠");
-    $("#opt2").val("A0303").text("#A수상레포츠");
-    $("#opt3").val("A0304").text("#A항공레포츠");
-    $("#opt4").val("A0305").text("#A복합레포츠");
+    $("#opt2").val("A0303").text("#수상레포츠");
+    $("#opt3").val("A0304").text("#항공레포츠");
+    $("#opt4").val("A0305").text("#복합레포츠");
   } else {
   }
 }
