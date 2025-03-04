@@ -48,44 +48,86 @@ header {
 .menu {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     position: absolute;
-    bottom: 5px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1010;
 }
 
-.menubtn button {
-    background: none;
-    border: none;
-    padding: 5px 5px;
-    cursor: pointer;
-    outline: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center; /* 중앙 정렬 */
-    justify-content: center; /* 세로로 중앙 정렬 */
+.menubtn {
+    flex: 1 1 calc(33.33% - 20px);
     width: 120px;
-    height: 100px;
+    text-align: center;
+}
+
+.menubtn button {
+    color: #f3eded;
+    transition: all 0.5s;
+    position: relative;
+    width: 110px;  
+    height: 50px;
+    border: none;
+    background-color: transparent; 
+    flex-direction: column; /* 세로로 정렬 */
+    align-items: center; /* 수평 중앙 정렬 */
+    justify-content: center; 
+}
+
+.menubtn button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;  /* 가상 요소가 버튼 뒤에 있도록 설정 */
+    background-color: rgba(252, 248, 248, 0.1);
+    transition: all 0.3s;
+}
+
+.menubtn button:hover::before {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+}
+
+.menubtn button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;  /* 버튼 위에 표시되도록 설정 */
+    opacity: 0;
+    transition: all 0.3s;
+    border: 1px solid rgba(12, 12, 12, 0.5);
+    transform: scale(1.2, 1.2);
+}
+
+.menubtn button:hover::after {
+    opacity: 1;
+    transform: scale(1, 1);
 }
 
 .menu-image {
     width: 40px;
     height: 40px;
-    margin-bottom: 5px; /* 이미지와 텍스트 사이의 간격 */
+    margin-bottom: -6px;
 }
 
 .menu-text {
-    font-size: 15px;
+    font-size: 12px;
     color: rgb(10, 1, 1);
     font-weight: bold;
     text-align: center;
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
+    white-space: break-word;
+    text-overflow: ellipsis;
     overflow: hidden;
     line-height: 1.2; /* 텍스트 세로 정렬 */
 }
+
 
 /* 로그인 영역 */
 #login-area {
@@ -144,63 +186,3 @@ body {
     padding-top: 150px;
 }
 
-/* 여행 목록 */
-#travel-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-    margin-left: 200px; 
-    max-width: 80%;
-    justify-items: end;
-    margin-top: 20px;
-    height: 70vh;
-    overflow-y: scroll;
-}
-
-/* 여행 카드 */
-.travel-card {
-    background: linear-gradient(135deg, #95b6f7, #f3f2ef);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    cursor: pointer;
-    height: 220px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 220px;
-
-}
-
-.travel-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 30px 60px rgba(0, 0, 0, 0.25);
-}
-
-.travel-card h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-
-/* 반응형 디자인 추가 */
-@media (max-width: 1200px) {
-    #travel-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 900px) {
-    #travel-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    #travel-list {
-        grid-template-columns: 1fr;
-    }
-}
