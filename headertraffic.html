@@ -21,6 +21,12 @@
         <!-- 메뉴 -->
         <div class="menu">
             <div class="menubtn">
+                <button value="교통" onclick="loginCheck(this.value)">
+                    <img class="menu-image" src="images/교통정보.png" alt="교통정보 이미지">
+                    <span class="menu-text">교통현황</span>
+                </button>
+            </div>
+            <div class="menubtn">
                 <button value="관광" onclick="loginCheck(this.value)">
                     <img class="menu-image" src="images/관광.png" alt="관광지 이미지">
                     <span class="menu-text">관광</span>
@@ -83,41 +89,14 @@
     <div class="sidebar">
         <select id="areaCode">
             <option value="">지역 선택</option>
-            <option value="1">서울</option>
-            <option value="6">부산</option>
-            <option value="4">대구</option>
-            <option value="2">인천</option>
-            <option value="5">광주</option>
-            <option value="3">대전</option>
-            <option value="7">울산</option>
-            <option value="8">세종</option>
-            <option value="31">경기</option>
-            <option value="32">강원</option>
-            <option value="33">충북</option>
-            <option value="34">충남</option>
-            <option value="35">전북</option>
-            <option value="36">전남</option>
-            <option value="37">경북</option>
-            <option value="38">경남</option>
-            <option value="39">제주</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="강원">강원</option>
+            <option value="충청">충청</option>
+            <option value="경상">경상</option>
+            <option value="전라">전라</option>
         </select>
-<!-- 
-1.밸류를 선택한 페이지마다 다르게
-2. 갯수도 선택한 페이지마다 다르게 (show hide 사용)
--->
-        <select id="courseCode">
-            <option  value="">코스 선택</option>
-            <option id="opt1" value="">#가족코스</option>
-            <option id="opt2" value="">#자전거코스</option>
-            <option id="opt3" value="">#도보코스</option>
-            <option id="opt4" value="">#힐링코스</option>
-            <option id="opt5" value="">#도보코스</option>
-            <option id="opt6" value="">#캠핑코스</option>
-            <option id="opt7" value="">#캠핑코스</option>
-            <option id="opt8" value="">#캠핑코스</option>
-            <option id="opt9" value="">#캠핑코스</option>
-            <option id="opt10" value="">#캠핑코스</option>
-        </select>
+        <a href="근처휴게소.html" id="courseCode">근처휴게소</a>
     </div>
 </body>
 
