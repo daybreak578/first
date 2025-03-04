@@ -18,6 +18,7 @@
         let currentPage = 1;
         const numOfRows = 99;
         callCheck = true;
+
         function fetchTravelData() {
             const selectedAreaCode = $("#areaCode").val();
             const selectedCourseCode = $("#courseCode").val();
@@ -129,6 +130,8 @@
             sessionStorage.setItem("cmapy", $(this).data("mapy"));
             window.location.href = `여행코스세부사항.html`;
         });
+
+        $("#areaCode, #courseCode").change(fetchTravelData);
 
 
     </script>

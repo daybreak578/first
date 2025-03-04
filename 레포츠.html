@@ -85,14 +85,7 @@
                 }
             });
         }
-        function timingcheck() {
-            $("#areaCode,#courseCode").change(function () {
-                const selectedAreaCode = $("#areaCode").val();
-                const selectedCourseCode = $("#courseCode").val();
-                
-                fetchTravelData();
-            });
-        }
+
         // 페이지 로드 시 저장된 데이터를 불러옴
         function loadSavedTravelData() {
             const savedAreaCode = sessionStorage.getItem("selectedAreaCode");
@@ -128,12 +121,10 @@
                 
                 fetchTravelData();
             });
-        };
-
+        }
+        
         $(document).ready(function () {
- 
             loadSavedTravelData();
-           
         });
         $(document).on("click", ".travel-card", function () {
             sessionStorage.setItem("ctitle", $(this).data("title"));
