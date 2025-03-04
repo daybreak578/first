@@ -59,7 +59,7 @@
         function passData(data) {
             for (let i = 0; i < data.length; i++) {
                 positions.push({
-                    content: '<div>' + data[i].unitName + '</div>'+'<a href="이름.html?stdRestCd=' + encodeURIComponent(data[i].stdRestCd) + '">상세정보보기</a>',
+                    content: '<div>' + data[i].unitName + '</div>'+'<a href="휴게소음식정보.html?stdRestCd=' + encodeURIComponent(data[i].stdRestCd) + '&unitCode=' + encodeURIComponent(data[i].unitCode) +'">상세정보보기</a>',
                     latlng: new kakao.maps.LatLng(parseFloat(data[i].yValue), parseFloat(data[i].xValue)),
                     stdRestCd: data[i].stdRestCd
                 });

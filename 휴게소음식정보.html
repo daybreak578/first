@@ -1,270 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고속도로 정보 API</title>
-<script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="/jquery-ui-1.14.1.custom/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="/jquery-ui-1.14.1.custom/jquery-ui.structure.min.css">
-<link rel="stylesheet" href="/jquery-ui-1.14.1.custom/jquery-ui.theme.min.css">
-<script type="text/javascript" src="/jquery-ui-1.14.1.custom/external/jquery/jquery.js"></script>
-<link rel="stylesheet" href="/jquery-ui-1.14.1.custom/jquery-ui.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dedd5748b884bc93df1111dd78cbb870&libraries=clusterer,services&autoload=false"></script> <!-- For Kakao Map -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고속도로 정보 API</title>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="휴게소음식정보.css">
 
-<style>
-        /* Overall page styling */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        h2 {
-            color: #2c3e50;
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-            font-family: 'Nanum Gothic', sans-serif;
-            background-color: #f7f9fc;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        h2:hover {
-            background-color: #e1f7ff;
-            transform: scale(1.05);
-        }
-
-        button {
-            background-color: #4a90e2;
-            color: white;
-            font-size: 1.2em;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #357ab7;
-            transform: scale(1.05);
-        }
-
-        button:active {
-            transform: scale(1);
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 40px;
-        }
-/*옆으로 나란히 배치*/
-         .side-by-side {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            gap: 20px;
-        } 
-
-        table {
-            width: 48%;
-            border-collapse: collapse;
-            text-align: center;
-            font-size: 1em;
-            border-radius: 8px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        table:hover {
-            transform: scale(0.99);
-        }
-
-        th, td {
-            padding: 14px 18px;
-            border: 1px solid #e1e1e1;
-        }
-
-        th {
-            background-color: #eaf4ff;
-            color: #2c3e50;
-            font-weight: bold;
-            font-size: 1.1em;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            font-family: 'Arial', sans-serif;
-            font-size: 0.95em;
-            color: #555;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(230, 245, 255, 0.7));
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 10px rgba(230, 245, 255, 0.7);
-            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
-        }
-
-        td:hover {
-            transform: scale(1.1);
-            background: linear-gradient(145deg, rgba(230, 245, 255, 0.8), rgba(180, 210, 255, 0.8));
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8), 0 0 15px rgba(180, 210, 255, 0.9);
-        }
-
-        caption {
-            font-family: 'Nanum Gothic', sans-serif;
-            font-weight: bold;
-            font-size: 1.6em;
-            color: #2c3e50;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            background-color: #eaf4ff;
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        #weather-info { margin-top: 20px; }
-        /* 옆으로 나란히 배치하는 스타일 속성*/
-        .weather-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-            .rest-area-weather, .real-time-weather {
-            width: 48%; /* 각 칸이 50%의 너비를 가지되, 간격을 위해 48%로 설정 */
-            padding: 15px;
-            
-        }
-
-        #restList {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #restList li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #map {
-            margin-top: 20px;
-        }
-
-        #info {
-            margin-top: 10px;
-        }
-</style>
 </head>
+
 <body>
     <h2>고속도로 정보</h2>
-    <!-- 날짜 선택 입력 필드 추가 -->
-    <label for="datePicker">날짜 선택: </label>
-    <input type="date" id="datePicker" />
-    
-    <label for="restStop">휴게소 선택: </label>
-    <select id="restStop">
-        <option value="서울만남(부산)휴게소">서울만남(부산)휴게소</option>
-        <option value="죽전(서울)휴게소">죽전(서울)휴게소</option>
-        <option value="기흥(부산)휴게소">기흥(부산)휴게소</option>
-        <option value="안성(서울)휴게소">안성(서울)휴게소</option>
-        <option value="안성(부산)휴게소">안성(부산)휴게소</option>
-        <option value="입장거봉포도(서울)휴게소">입장거봉포도(서울)휴게소</option>
-        <option value="망향(부산)휴게소">망향(부산)휴게소</option>
-        <option value="천안삼거리(서울)휴게소">천안삼거리(서울)휴게소</option>
-        <option value="천안호두(부산)휴게소">천안호두(부산)휴게소</option>
-        <option value="청주(서울)휴게소">청주(서울)휴게소</option>
-        <option value="옥산(부산)휴게소">옥산(부산)휴게소</option>
-        <option value="죽암(서울)휴게소">죽암(서울)휴게소</option>
-        <option value="죽암(부산)휴게소">죽암(부산)휴게소</option>
-        <option value="신탄진(서울)휴게소">신탄진(서울)휴게소</option>
-        <option value="옥천(부산)휴게소">옥천(부산)휴게소</option>
-        <option value="옥천(서울)휴게소">옥천(서울)휴게소</option>
-        <option value="금강(부산)휴게소">금강(부산)휴게소</option>
-        <option value="황간(부산)휴게소">황간(부산)휴게소</option>
-        <option value="황간(서울)휴게소">황간(서울)휴게소</option>
-        <option value="추풍령(부산)휴게소">추풍령(부산)휴게소</option>
-        <option value="추풍령(서울)휴게소">추풍령(서울)휴게소</option>
-        <option value="칠곡(부산)휴게소">칠곡(부산)휴게소</option>
-        <option value="칠곡(서울)휴게소">칠곡(서울)휴게소</option>
-        <option value="경산(서울)휴게소">경산(서울)휴게소</option>
-        <option value="평사(부산)휴게소">평사(부산)휴게소</option>
-        <option value="건천(서울)휴게소">건천(서울)휴게소</option>
-        <option value="건천(부산)휴게소">건천(부산)휴게소</option>
-        <option value="경주(부산)휴게소">경주(부산)휴게소</option>
-        <option value="언양(서울)휴게소">언양(서울)휴게소</option>
-        <option value="양산(서울)휴게소">양산(서울)휴게소</option>
-        <option value="진영(부산)휴게소">진영(부산)휴게소</option>
-        <option value="진영(순천)휴게소">진영(순천)휴게소</option>
-        <option value="문산(순천)휴게소">문산(순천)휴게소</option>
-        <option value="사천(부산)휴게소">사천(부산)휴게소</option>
-        <option value="사천(순천)휴게소">사천(순천)휴게소</option>
-        <option value="섬진강(부산)휴게소">섬진강(부산)휴게소</option>
-        <!-- 추가적인 휴게소 옵션을 여기에 추가할 수 있습니다 -->
-    </select>
-    
-    <label for="unitCode">편의시설 선택: </label>
-    <select id="unitCode">
-        <option value="000001">서울만남(부산)휴게소</option>
-        <option value="000003">죽전(서울)휴게소</option>
-        <option value="000005">기흥(부산)휴게소</option>
-        <option value="000007">안성(서울)휴게소</option>
-        <option value="000009">안성(부산)휴게소</option>
-        <option value="000011">입장거봉포도(서울)휴게소</option>
-        <option value="000013">망향(부산)휴게소</option>
-        <option value="000015">천안삼거리(서울)휴게소</option>
-        <option value="000017">천안호두(부산)휴게소</option>
-        <option value="000019">청주(서울)휴게소</option>
-        <option value="000021">옥산(부산)휴게소</option>
-        <option value="000024">죽암(서울)휴게소</option>
-        <option value="000026">죽암(부산)휴게소</option>
-        <option value="000028">신탄진(서울)휴게소</option>
-        <option value="000030">옥천(부산)휴게소</option>
-        <option value="000032">옥천(서울)휴게소</option>
-        <option value="000034">금강(부산)휴게소</option>
-        <option value="000036">황간(부산)휴게소</option>
-        <option value="000038">황간(서울)휴게소</option>
-        <option value="000040">추풍령(부산)휴게소</option>
-        <option value="000042">추풍령(서울)휴게소</option>
-        <option value="000044">칠곡(부산)휴게소</option>
-        <option value="000046">칠곡(서울)휴게소</option>
-        <option value="000048">경산(서울)휴게소</option>
-        <option value="000050">평사(부산)휴게소</option>
-        <option value="000052">건천(서울)휴게소</option>
-        <option value="000054">건천(부산)휴게소</option>
-        <option value="000055">경주(부산)휴게소</option>
-        <option value="000057">언양(서울)휴게소</option>
-        <option value="000062">양산(서울)휴게소</option>
-        <option value="000063">진영(부산)휴게소</option>
-        <option value="000064">진영(순천)휴게소</option>
-        <option value="000071">문산(순천)휴게소</option>
-        <option value="000073">사천(부산)휴게소</option>
-        <option value="000074">사천(순천)휴게소</option>
-        <option value="000077">섬진강(부산)휴게소</option>
-        <!-- 추가적인 편의시설 선택 옵션을 여기에 추가할 수 있습니다 -->
-    </select>
 
-    <button id="getData">데이터 가져오기</button>
-    
+
     <div class="container" id="result">
         <!-- Food and Convenience Tables side by side -->
         <div class="side-by-side">
@@ -272,18 +22,24 @@
             <div id="convData"></div>
         </div>
         <!--옆으로 나란히 배치-->
-        <div class="weather-container"> 
-        <!-- Weather Table -->
-        <div id="weatherData" class="rest-area-weather"></div>
-        <div id="weather-info" class="real-time-weather">
-            <!-- 날씨 정보가 여기에 표시됩니다 -->
-        </div>
+        <div class="weather-container">
+            <!-- Weather Table -->
+            <div id="weatherData" class="rest-area-weather"></div>
+            <div id="weather-info" class="real-time-weather">
+                <!-- 날씨 정보가 여기에 표시됩니다 -->
+            </div>
         </div>
     </div>
     <h2>휴게소 위치 및 날씨 정보</h2>
     <div id="map"></div>
     <div id="info">휴게소 정보를 불러오는 중...</div>
+
+
+
+
     <script type="text/javascript">
+        let urlParams = new URLSearchParams(window.location.search);
+        let stdRestCd = urlParams.get('stdRestCd');
         $(document).ready(function () {
             const apiKey = "8024505971"; // API 인증키 입력
             const url = "https://data.ex.co.kr/openapi/restinfo/restWeatherList";
@@ -293,102 +49,15 @@
             };
             let today = new Date();
             let stdHour = today.getHours() - (today.getHours() % 3); // 3-hour block
-            let stdRestNm= "";
-            let stdRestCd= "";
-            $(document).on("change", "#restStop", function() {
-                stdRestNm = $(this).val(); 
-                console.log("stdRestNm:", stdRestNm);
-            });
-            $(document).on("change", "#unitCode", function() {
-                stdRestCd = $(this).val();
-                console.log("stdRestCd:", stdRestCd);
-            });
-            setInterval(function () {
-                $("#getData").trigger("click");
-                alert("날씨 정보가 자동으로 갱신되었습니다.");
-            }, 3600000); // 10초마다 갱신
-            // Update data when the button is clicked
-            window.onload = function () {
-                const apiKey = "8024505971"; // API 인증키 입력
-                const url = "https://data.ex.co.kr/openapi/restinfo/restWeatherList";
-                const params = {
-                    key: apiKey,
-                    type: "json"
-                };
-                let today = new Date();
-                let stdHour = today.getHours() - (today.getHours() % 3); // 3-hour block
-                let stdRestNm = "";
-                let stdRestCd = "";
+            let stdRestNm = "";
 
-                document.getElementById("restStop").addEventListener("change", function() {
-                    stdRestNm = this.value; 
-                    console.log("stdRestNm:", stdRestNm);
-                });
 
-                document.getElementById("unitCode").addEventListener("change", function() {
-                    stdRestCd = this.value;
-                    console.log("stdRestCd:", stdRestCd);
-                });
-
-                setInterval(function () {
-                    document.getElementById("getData").click();
-                    alert("날씨 정보가 자동으로 갱신되었습니다.");
-                }, 3600000); // 10초마다 갱신
-
-                // Initialize Kakao Map
-                var map = null;
-                kakao.maps.load(function () {
-                    var mapContainer = document.getElementById('map');
-                    var mapOption = {
-                        center: new kakao.maps.LatLng(36.5, 127.5), // 대한민국 중앙 좌표
-                        level: 7
-                    };
-                    var map = new kakao.maps.Map(mapContainer, mapOption);
-                });
-
-                // Fetch weather data
-                function getWeather(restCd, restNm, lat, lng) {
-                    $.ajax({
-                        url: "https://data.ex.co.kr/openapi/restinfo/restWeatherList",
-                        type: "GET",
-                        data: {
-                            key: appKey,
-                            type: "json",
-                            stdRestCd: restCd,
-                            sdate: sdate,
-                            stdHour: stdHour
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            let weatherItems = response.list || [];
-                            let info = `<h3>${restNm} - 날씨 정보</h3>`;
-                            if (weatherItems.length > 0) {
-                                weatherItems.forEach(item => {
-                                    info += `<p>휴게소명: ${item.unitName}</p>`;
-                                    info += `<p>현재기온: ${item.tempValue}℃</p>`;
-                                    info += `<p>날씨상태: ${item.weatherContents}</p>`;
-                                });
-                            } else {
-                                info += `<p>날씨 정보 없음</p>`;
-                            }
-                            document.getElementById("info").innerHTML = info;
-                        }
-                    });
-                }
-            };
-            
+            $("#document").ready(function () {
                 
-            $("#getData").click(function () {
-                let selectedDate = $("#datePicker").val();
-                if (!selectedDate) {
-                    selectedDate = today.toISOString().split('T')[0]; // Today's date in ISO format
-                }
-                
-                let sdate = selectedDate.replace(/-/g, ""); 
                 $("#foodData").html("");
                 $("#convData").html("");
                 $("#weatherData").html("");
-
+                
                 // Fetch food info based on selected rest stop
                 $.ajax({
                     url: "https://data.ex.co.kr/openapi/restinfo/restBestfoodList",
@@ -396,12 +65,13 @@
                     data: {
                         key: "8024505971",
                         type: "json",
-                        numOfRows: 10,
+                        numOfRows: 99,
                         pageNo: 1,
-                        stdRestNm: stdRestNm
+                        stdRestCd: stdRestCd, // 선택된 휴게소명으로 변경
                     },
                     dataType: "json",
                     success: function (foodResponse) {
+                        console.log(foodResponse)
                         let foodItems = foodResponse.list || [];
                         let foodTable = `<table><caption>음식 정보</caption><thead><tr><th>음식명</th><th>가격</th><th>설명</th></tr></thead><tbody>`;
                         if (foodItems.length === 0) {
@@ -423,13 +93,12 @@
                     data: {
                         key: "8024505971",
                         type: "json",
-                        numOfRows: 10,
+                        numOfRows: 99,
                         pageNo: 1,
                         stdRestCd: stdRestCd, // 선택된 휴게소명으로 변경
                     },
                     dataType: "json",
                     success: function (convResponse) {
-                        console.log(stdRestNm);
                         let convItems = convResponse.list || [];
                         let convTable = `<table><caption>편의시설 정보</caption><thead><tr><th>편의시설</th><th>설명</th></tr></thead><tbody>`;
                         if (convItems.length === 0) {
@@ -443,98 +112,9 @@
                         $("#convData").html(convTable);
                     }
                 });
-
-                // Fetch weather data
-                $.ajax({
-                    url: "https://data.ex.co.kr/openapi/restinfo/restWeatherList",
-                    type: "GET",
-                    data: {
-                        key: "8024505971",
-                        type: "json",
-                        sdate: sdate,
-                        stdHour: stdHour,
-                    },
-                    dataType: "json",
-                    success: function (weatherResponse) {
-                        let weatherItems = weatherResponse.list || [];
-                        
-                        let weatherTable = `<table><caption>날씨 정보</caption><thead><tr><th>휴게소명</th><th>현재기온</th><th>현재일기내용</th></tr></thead>`;
-                        if (weatherItems.length === 0) {
-                            weatherTable += `<tr><td colspan="3">날씨 정보 없음</td></tr>`;
-                        } else {    
-                            weatherItems.forEach(item => {
-                                // 조건문을 수정하여 -99.000000 또는 -999.000000인 경우 '데이터 없음'으로 표시
-                                if (item.tempValue == -99.000000 || item.tempValue == -999.000000) {
-                                        weatherTable += `<tr><td>${item.unitName}</td><td>데이터 없음</td><td>${item.weatherContents}</td></tr>`;
-                                } else {
-                                        weatherTable += `<tr><td>${item.unitName}</td><td>${item.tempValue}°C</td><td>${item.weatherContents}</td></tr>`;
-                                }
-                            });       
-                        }     
-                        weatherTable += `</tbody></table>`;
-                        $("#weatherData").html(weatherTable);
-                    }
-                });
-
-                $.ajax({
-                    url: "https://data.ex.co.kr/openapi/restinfo/restWeatherList",
-                    type: "GET",
-                    data: {
-                        key: "3762609281", // API 인증키
-                        type: "json",
-                        stdRestCd: stdRestCd,
-                        sdate: sdate,
-                        stdHour: stdHour,
-                        list: []
-                    },
-                    dataType: "json",
-                    success: function (response) {
-                        console.log(response);
-                        let weatherItems = response.list || [];
-                        let weatherTable = `
-                            <table>
-                                <caption>실시간 휴게소 날씨 정보 조회</caption>
-                                <thead>
-                                    <tr>
-                                        <th>휴게소명</th>
-                                        <th>현재기온(℃)</th>
-                                        <th>강수량(mm)</th>
-                                        <th>날씨상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-
-                        if (weatherItems.length === 0) {
-                            weatherTable += `<tr><td colspan="4">날씨 정보 없음</td></tr>`;
-                        } else {
-                            weatherItems.forEach(item => {
-                                // 조건문을 수정하여 -99.000000 또는 -999.000000인 경우 '데이터 없음'으로 표시
-                                if (item.tempValue == -99.000000 || item.tempValue == -999.000000) {
-                                        weatherTable += `<tr><td>${item.unitName}</td><td>데이터 없음</td><td>${item.rainfallValue}mm</td><td>${item.weatherContents}</td></tr>`;
-                                }   else {
-                                        weatherTable += `
-                                            <tr>
-                                                <td>${item.unitName}</td>
-                                                <td>${item.tempValue}℃</td>
-                                                <td>${item.rainfallValue}mm</td>
-                                                <td>${item.weatherContents}</td>
-                                            </tr>`;
-                                        }        
-                            });
-                        }
-                        weatherTable += `</tbody></table>`;
-                        $("#weather-info").html(weatherTable);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("API 호출 오류:", error);
-                        $("#weather-info").html("<p>날씨 정보를 불러오는 데 실패했습니다.</p>");
-                    }
-                });
-
-
-                
-        });
+            });
         });
     </script>
 </body>
+
 </html>
