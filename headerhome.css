@@ -50,7 +50,7 @@ header {
     justify-content: center;
     gap: 5px;
     position: absolute;
-    bottom: 15px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1010;
@@ -58,7 +58,7 @@ header {
 
 .menubtn {
     flex: 1 1 calc(33.33% - 20px);
-    width: 120px;
+    width: 115px;
     text-align: center;
 }
 
@@ -73,6 +73,7 @@ header {
     flex-direction: column; /* 세로로 정렬 */
     align-items: center; /* 수평 중앙 정렬 */
     justify-content: center; 
+    border-radius: 12px;
 }
 
 .menubtn button::before {
@@ -85,6 +86,7 @@ header {
     z-index: 0;  /* 가상 요소가 버튼 뒤에 있도록 설정 */
     background-color: rgba(252, 248, 248, 0.1);
     transition: all 0.3s;
+    border-radius: 12px;
 }
 
 .menubtn button:hover::before {
@@ -104,6 +106,7 @@ header {
     transition: all 0.3s;
     border: 1px solid rgba(12, 12, 12, 0.5);
     transform: scale(1.2, 1.2);
+    border-radius: 12px;
 }
 
 .menubtn button:hover::after {
