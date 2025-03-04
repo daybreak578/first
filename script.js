@@ -101,6 +101,11 @@ function pageopt() {
     $("#opt1").val("A0202").text("#아쿠아리움");
     $("#opt2").val("A0203").text("#문화센터");
     $("#opt3").val("A0206").text("#전시관");
+  } else if (pagestatus === "관광지") {
+    $("#opt4,#opt5,#opt6,#opt7,#opt8,#opt9,#opt10").hide();
+    $("#opt1").val("A0101").text("#자연관광지");
+    $("#opt2").val("A0102").text("#인문(문화/역사)관광지");
+    $("#opt3").val("A0103").text("#체험관광지");  
   } else if (pagestatus === "레포츠") {
     $("#opt5,#opt6,#opt7,#opt8,#opt9,#opt10").hide();
     $("#opt1").val("A0302").text("#육상레포츠");
