@@ -115,25 +115,32 @@ $(document).ready(function () {
       });
   }
 
-  // 지역선택 버튼 클릭 시
-  $(".option").on("click", function () {
-    let region = $(this).text(); // 클릭한 지역 이름 가져오기
+  // // 지역선택 버튼 클릭 시
+  // $(".option").on("click", function () {
+  //   let region = $(this).text(); // 클릭한 지역 이름 가져오기
+  //   updateRegion(region); // 지역에 맞는 regionCodes 업데이트
+  //   fetchTrafficData(); // 교통 데이터 요청
+  //   updateRegionm(region); // 지도에 표시할 좌표지정
+  //   sessionStorage.setItem("region", region);
+  // });
+  
+  $(document).on('change', '#areaCode', function () {
+    let region = $("#areaCode").val();
     updateRegion(region); // 지역에 맞는 regionCodes 업데이트
     fetchTrafficData(); // 교통 데이터 요청
     updateRegionm(region); // 지도에 표시할 좌표지정
     sessionStorage.setItem("region", region);
-  });
-
+ });
   // 지역선택 버튼 클릭 시 드롭다운 메뉴 표시
-  $("#select").on("click", function () {
-    select();
-  });
+  // $("#select").on("click", function () {
+  //   select();
+  // });
 
-  function select() {
-    for (let i = 0; i < 7; i++) {
-      $(`#option${i}`).css("display", "flex");
-    }
-  }
+  // function select() {
+  //   for (let i = 0; i < 7; i++) {
+  //     $(`#option${i}`).css("display", "flex");
+  //   }
+  // }
 
   //1. 버튼 선택시 값이 넘어가게함
   function updateRegionm(region) {
