@@ -81,6 +81,14 @@ header {
     background-color: #fff;
 }
 
+.menubtn button.active {
+    background-color: #f7f4f0; /* 원하는 색상 */
+    color: white;
+}
+
+
+
+
 .menu-image {
     width: 40px;
     height: 40px;
