@@ -31,12 +31,12 @@ header {
 }
 
 #welcome-text {
-    font-size: 23px; 
+    font-size: 25px; 
     color: #333; 
     font-weight: bold;
     position: relative; 
-    top: 10px; 
-    left: 50%; 
+    top: 5px; 
+    left: 200px; 
     transform: translateX(-50%); 
     z-index: 1001; 
 }
@@ -156,15 +156,14 @@ header {
 .logout {
     background-color: #7095c5b2;
     border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
+    padding: 5px 10px;
+    border-radius: 5px;
     color: white;
     font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     position: relative;  /* 절대 위치 설정 */
-    top: 50px;           /* 상단 위치 */
-    right: 50px;         /* 오른쪽 끝으로 위치 */
+    top: 50px; 
     z-index: 1002;  
 }
 
