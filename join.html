@@ -59,15 +59,15 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#complete").on("click", function () {
+			$("#joinbtn").on("click", function () {
 				join();
 			});
 		});
 		function join() {
-			if ($("#pw").val() == $("#pw2").val()) {
-				let id = $("#id").val()
+			if ($("#pwarea").val() == $("#pwarea2").val()) {
+				let id = $("#idarea").val()
 				localStorage.setItem("id", id)
-				let pw = $("#pw").val()
+				let pw = $("#pwarea").val()
 				localStorage.setItem("pw", pw)
 				let name = $("#name").val()
 				localStorage.setItem("name", name)
