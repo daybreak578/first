@@ -76,7 +76,31 @@
         <a class="login" href="join.html" id="join">회원가입</a>
         <input class="logout" type="button" id="logout" value="로그아웃">
     </div>
+    
+    <!-- 메뉴바 활성화 -->
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            var activeMenu = localStorage.getItem('activeMenu');
+            if (activeMenu) {
+                $('button[value="' + activeMenu + '"]').addClass('active');
+            }
+    
+            $('.menubtn button').click(function () {
+                loginCheck($(this).val());
+            });
+        });
+    
+        function loginCheck(value) {
+      
+            $('.menubtn button').removeClass('active');
+            $('button[value="' + value + '"]').addClass('active');
+
+            localStorage.setItem('activeMenu', value);
+            window.location.href = value + '.html';
+        }
+    </script>
+    
 </body>
 
 </html>
