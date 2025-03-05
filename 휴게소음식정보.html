@@ -30,9 +30,9 @@
             </div>
         </div>
     </div>
-    <h2>휴게소 위치 및 날씨 정보</h2>
-    <div id="map"></div>
-    <div id="info">휴게소 정보를 불러오는 중...</div>
+    <h2>휴게소 날씨 및 정보</h2>
+    <!-- <div id="map"></div> -->
+    <div id="output">휴게소 정보를 불러오는 중...</div>
 
 
 
@@ -45,17 +45,61 @@
         console.log("stdRestCd:", stdRestCd);
         console.log("unitCode:", unitCode);
 
+        // let today = new Date();
+        //     let stdHour = today.getHours() - (today.getHours() % 3); // 3-hour block
+        //     let stdRestNm = "";
+
+
         $(document).ready(function () {
             const apiKey = "8024505971"; // API 인증키 입력
             const url = "https://data.ex.co.kr/openapi/restinfo/restWeatherList";
-            const params = {
-                key: apiKey,
-                type: "json"
-            };
-            let today = new Date();
-            let stdHour = today.getHours() - (today.getHours() % 3); // 3-hour block
-            let stdRestNm = "";
+            
+            $.ajax({
+                url : url,
+                type : "GET",
+                data: {
+                    key : apiKey,
+                    type : "json",
+                    sdate : "20250304",
+                    stdHour : "09",
+                    unitCode : unitCode
+                },
+                dataType : "json",
+                success : function (response) {
+                    console.log("날씨:",response);
 
+                    if (response && response.list) {
+              
+                let weatherData = response.list.find(item => String(item.unitCode).trim() === String(unitCode).trim());
+
+                if (weatherData) {
+                    $("#output").html(`
+                        <p><strong>휴게소명:</strong> ${weatherData.unitName}</p>
+                        
+                        <p><strong>날씨 정보:</strong></p>
+                        <ul>
+                           <li>날씨 상태: ${weatherData.weatherContents}</li>
+                            <li>현재 기온: ${parseFloat(weatherData.tempValue).toFixed(1)}°C</li>
+                           
+                           
+                            <li>바람 속도:  ${parseFloat(weatherData.windValue).toFixed(1)}m/s</li>
+                            
+                        </ul>
+                    `);
+                } else {
+                    $("#output").html(`<p>unitCode:에 대한 날씨 정보를 찾을 수 없습니다.</p>`);
+                }
+            } else {
+                $("#output").html("<p>API에서 날씨 데이터를 불러올 수 없습니다.</p>");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("API 요청 실패:", error);
+            $("#output").html("<p>데이터를 불러오는 중 오류가 발생했습니다.</p>");
+            }
+            })
+
+           
 
             $("#document").ready(function () {
                 
