@@ -40,6 +40,11 @@
     <script type="text/javascript">
         let urlParams = new URLSearchParams(window.location.search);
         let stdRestCd = urlParams.get('stdRestCd');
+        let unitCode = urlParams.get('unitCode');
+
+        console.log("stdRestCd:", stdRestCd);
+        console.log("unitCode:", unitCode);
+
         $(document).ready(function () {
             const apiKey = "8024505971"; // API 인증키 입력
             const url = "https://data.ex.co.kr/openapi/restinfo/restWeatherList";
