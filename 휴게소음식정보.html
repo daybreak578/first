@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <h2>고속도로 정보</h2>
+    <h2>()휴게소</h2>
 
 
     <div class="container" id="result">
@@ -25,17 +25,11 @@
         <div class="weather-container">
             <!-- Weather Table -->
             <div id="weatherData" class="rest-area-weather"></div>
-            <div id="weather-info" class="real-time-weather">
+            <div id="weather-info" class="real-time-weather">휴게소 정보를 불러오는 중...
                 <!-- 날씨 정보가 여기에 표시됩니다 -->
             </div>
         </div>
     </div>
-    <h2>휴게소 날씨 및 정보</h2>
-    <!-- <div id="map"></div> -->
-    <div id="output">휴게소 정보를 불러오는 중...</div>
-
-
-
 
     <script type="text/javascript">
         let urlParams = new URLSearchParams(window.location.search);
@@ -73,29 +67,28 @@
                 let weatherData = response.list.find(item => String(item.unitCode).trim() === String(unitCode).trim());
 
                 if (weatherData) {
-                    $("#output").html(`
-                        <p><strong>휴게소명:</strong> ${weatherData.unitName}</p>
+                    $("#weather-info").html(`             
                         
-                        <p><strong>날씨 정보:</strong></p>
+                     <p>날씨 정보:</p>
                         <ul>
                            <li>날씨 상태: ${weatherData.weatherContents}</li>
                             <li>현재 기온: ${parseFloat(weatherData.tempValue).toFixed(1)}°C</li>
-                           
+                         
                            
                             <li>바람 속도:  ${parseFloat(weatherData.windValue).toFixed(1)}m/s</li>
                             
                         </ul>
                     `);
                 } else {
-                    $("#output").html(`<p>unitCode:에 대한 날씨 정보를 찾을 수 없습니다.</p>`);
+                    $("#weather-info").html(`<p>unitCode:에 대한 날씨 정보를 찾을 수 없습니다.</p>`);
                 }
             } else {
-                $("#output").html("<p>API에서 날씨 데이터를 불러올 수 없습니다.</p>");
+                $("#weather-info").html("<p>API에서 날씨 데이터를 불러올 수 없습니다.</p>");
             }
         },
         error: function (xhr, status, error) {
             console.error("API 요청 실패:", error);
-            $("#output").html("<p>데이터를 불러오는 중 오류가 발생했습니다.</p>");
+            $("#weather-info").html("<p>데이터를 불러오는 중 오류가 발생했습니다.</p>");
             }
             })
 
