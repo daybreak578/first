@@ -51,6 +51,8 @@
                     _type: "json"
                 },
                 success: function (response) {
+
+                    console.log(response);
                     if (response.response?.body?.items?.item) {
                         const items = response.response.body.items.item;
                         let htmlContent = "";
