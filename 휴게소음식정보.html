@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <h2>()휴게소</h2>
+    <h2 id="restAreaName">휴게소</h2>
 
 
     <div class="container" id="result">
@@ -125,6 +125,11 @@
                         }
                         foodTable += `</tbody></table>`;
                         $("#foodData").html(foodTable);
+
+                        if (foodItems.length > 0) {
+                            let stdRestNm = foodItems[0].stdRestNm;
+                            $("#restAreaName").text(`${stdRestNm} 휴게소`);
+                        }
                     }
                 });
 

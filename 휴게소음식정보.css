@@ -9,7 +9,6 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    position: relative; /* absolute 요소 기준 */
 }
 
 h2 {
@@ -28,7 +27,7 @@ h2:hover {
     transform: scale(1.05);
 }
 
-/* ✅ 날씨 정보 (오른쪽 상단 배치) */
+/* ✅ 날씨 정보 (위쪽 배치) */
 .weather-container {
     position: absolute;
     top: 20px;
@@ -36,28 +35,30 @@ h2:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-end; /* 내용 오른쪽 정렬 */
-    width: 300px;
+    width: 320px;
     background-color: white;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ 날씨 정보 내부 스타일 */
+/* 날씨 정보 내부 스타일 */
 #weather-info {
     text-align:left;
     width: 100%;
 }
 
-/* 음식 정보 & 편의시설 정보 (가로 정렬) */
+/* ✅ 음식 정보 & 편의시설 (아래쪽 배치) */
 .side-by-side {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    max-width: 1280px;
     gap: 20px;
+    margin-top: 80px;
 }
 
-/* 개별 박스 스타일 */
+/* 음식 & 편의시설 개별 박스 */
 #foodData, #convData {
     width: 48%;
     background-color: white;
