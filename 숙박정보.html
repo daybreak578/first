@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숙박업소 정보</title>
+    <link rel="stylesheet" href="숙박정보.css">
+    <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+    <script src="script.js"></script>
+    <header id="header"></header>
+
+    <div class="room-container">
+        <div id="room-card"></div> 
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const contentid = urlParams.get('contentid');  // 쿼리 스트링에서 contentid 가져옴
+
+            if (contentid) {
+                fetchRoomInfo(contentid);  // contentid가 있을 경우 객실 정보 가져오기
+            } else {
+                console.log("contentid가 없음");
+            }
+
+            // 객실 정보 가져오기
+            function fetchRoomInfo(contentid) {
+                const serviceKey = "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA=="; // 인증키
+                const apiUrl = "http://apis.data.go.kr/B551011/KorService1/detailInfo1";
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    data: {
+                        serviceKey: serviceKey,
+                        MobileApp: "AppTest",
+                        MobileOS: "ETC",
+                        contentId: contentid,
+                        contentTypeId: "32", 
+                        _type: "json"
+                    },
+                    success: function (response) {
+                        console.log(response); 
+
+                        if (response.response.header.resultCode === "0000" && response.response.body.items) {
+                            let items = response.response.body.items.item;
+
+                            // item이 배열이 아니면 객체일 수 있으므로, 배열처럼 처리
+                            if (!Array.isArray(items)) {
+                                items = [items];  
+                            }
+
+                            // items 배열이 존재하고, 길이가 0 이상인 경우 처리
+                            if (items.length > 0) {
+                                const roomList = items.map(room => {
+                                    return `
+                                        <div class="room-card">
+                                            <img src="${room.roomimg1 || 'no-image.jpg'}" alt="객실 사진">
+                                            <h3>${room.roomtitle || '객실명칭 없음'}</h3>
+                                            <p>객실 크기(평): ${room.roomsize1 || '정보 없음'}평</p>
+                                            <p>객실 수: ${room.roomcount || '정보 없음'}</p>
+                                            <p>기준 인원: ${room.roombasecount || '정보 없음'}명</p>
+                                            <p>최대 인원: ${room.roommaxcount || '정보 없음'}명</p>
+                                            <p>비수기 주중 최소: ${room.roomoffseasonminfee1 || '정보 없음'}원</p>
+                                            <p>비수기 주말 최소: ${room.roomoffseasonminfee2 || '정보 없음'}원</p>
+                                            <p>성수기 주중 최소: ${room.roompeakseasonminfee1 || '정보 없음'}원</p>
+                                            <p>성수기 주말 최소: ${room.roompeakseasonminfee2 || '정보 없음'}원</p>
+                                            <p>객실 소개: ${room.roomintro || '정보 없음'}</p>
+                                        </div>
+                                    `;
+                                }).join('');
+
+                                console.log(roomList);  
+                                $('#room-card').html(roomList);  
+                            } else {
+                                $('#room-card').html("<p>해당 콘텐츠에 대한 객실 정보가 없습니다.</p>");
+                            }
+                        } else {
+                            $('#room-card').html("<p>응답 형식에 문제가 있습니다. 객실 정보를 가져올 수 없습니다.</p>");
+                        }
+                    },
+                    error: function () {
+                        $('#room-card').html("<p>객실 정보 요청에 실패했습니다. 서버나 인터넷 연결을 확인하세요.</p>");
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

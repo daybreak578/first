@@ -76,7 +76,7 @@
         <a class="login" href="join.html" id="join">회원가입</a>
         <input class="logout" type="button" id="logout" value="로그아웃">
     </div>
-    
+
     <!-- 메뉴바 활성화 -->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -91,14 +91,14 @@
             });
         });
     
-        function loginCheck(value) {
+        // function loginCheck(value) {
       
-            $('.menubtn button').removeClass('active');
-            $('button[value="' + value + '"]').addClass('active');
+        //     $('.menubtn button').removeClass('active');
+        //     $('button[value="' + value + '"]').addClass('active');
 
-            localStorage.setItem('activeMenu', value);
-            window.location.href = value + '.html';
-        }
+        //     localStorage.setItem('activeMenu', value);
+        //     window.location.href = value + '.html';
+        // }
     </script>
     
 </body>
