@@ -59,6 +59,7 @@
                         items.forEach(item => {
                             htmlContent += `
                                 <div class="travel-card" 
+                                  data-contentid="${item.contentid}"   
                                     data-title="${item.title}" 
                                     data-image="${item.firstimage}"
                                     data-addr="${item.addr1 || ''}" 
@@ -100,6 +101,7 @@
                 items.forEach(item => {
                     htmlContent += `
                         <div class="travel-card" 
+                          data-contentid="${item.contentid}"   
                             data-title="${item.title}" 
                             data-image="${item.firstimage || ''}"
                             data-addr="${item.addr1 || ''}" 

@@ -16,7 +16,7 @@
 
     <div class="travel-detail">
         <img id="image" src="" alt="이미지 없음">
-        <h2 id="title">여행 코스 정보</h2>
+        <h2 id="title">문화시설 정보</h2>
         <p><strong>주소:</strong> <span id="addr">정보 없음</span></p>
         <p><strong>전화번호:</strong> <span id="tel">정보 없음</span></p>
         <a href="./문화시설.html" class="back-btn">목록으로 돌아가기</a>
@@ -37,7 +37,7 @@
         if (contentid) {
             document.getElementById("detail-btn").addEventListener("click", function (event) {
                 event.preventDefault(); // 기본 동작 막기
-                const url = `./여행코스1.html?contentid=${encodeURIComponent(contentid)}`;
+                const url = `./문화시설1.html?contentid=${encodeURIComponent(contentid)}`;
                 window.open(url, '_blank'); // '_blank'는 새 탭 또는 새 창을 의미
             });
         } else {
