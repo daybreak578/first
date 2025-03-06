@@ -11,20 +11,20 @@
 
 <body>
     <div class="event-container">
-        <h2>관광 정보</h2>
-        <!-- <div id="eventInfo" >정보를 불러오는 중...</div> -->
+        <h2>여행코스 정보</h2>
+        <div id="eventInfo" >정보를 불러오는 중...</div>
     </div>
     <script>
-        //  let urlParams = new URLSearchParams(window.location.search);
-        //  let contentid = urlParams.get('contentid');
+         let urlParams = new URLSearchParams(window.location.search);
+         let contentid = urlParams.get('contentid');
 
-        //  console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
+         console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
 
         function fetchContentDetails(contentid) {
-            // if (!contentid) {
-            //     $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
-            //     return;
-            // }
+            if (!contentid) {
+                $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
+                return;
+            }
 
             $.ajax({
                 url: "http://apis.data.go.kr/B551011/KorService1/detailInfo1",
