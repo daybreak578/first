@@ -6,12 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 코스 목록</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    /* 컨테이너 스타일 */
+    .event-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 제목 스타일 */
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    /* 개별 코스 아이템 */
+    .course-item {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 소제목 */
+    h3 {
+        color: #007BFF;
+        margin-bottom: 8px;
+    }
+    
+    /* 텍스트 스타일 */
+    p {
+        color: #555;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+    
+    /* 이미지 스타일 */
+    img {
+        max-width: 100%;
+        border-radius: 8px;
+        display: block;
+        margin: 10px auto;
+    }
+    
+    /* 구분선 */
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 15px 0;
+    }
+</style>
 </head>
 
 <body>
     <div class="event-container">
-        <h2>여행코스 정보</h2>
+     
         <div id="eventInfo">정보를 불러오는 중...</div>
     </div>
     <script>
@@ -55,12 +117,16 @@
                         return value && value.trim() !== "" ? value : "정보 없음";
                     }
 
+                    let eventInfoHtml = "<h2>관광 코스 정보</h2>";
+
                     items.forEach(item => {
                         eventInfoHtml += `
             <div class="course-item">
-                <h3>${checkValue(item.subname)}</h3>
+           
+                    <p><strong>코스명:</strong> ${checkValue(item.subname)}</p>
                 <p><strong>코스 이미지 설명:</strong> ${checkValue(item.subdetailalt)}</p>
                 <p><strong>코스 개요:</strong> ${checkValue(item.subdetailoverview)}</p>
+                
                 ${item.subdetailimg ? `<img src="${item.subdetailimg}" alt="코스 이미지" style="max-width:300px;">` : '<p>이미지 없음</p>'}
             </div>
             <hr>
