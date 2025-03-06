@@ -135,6 +135,17 @@
             window.location.href = `관광지코스세부사항.html`;
         });
 
+        $(document).on("click", ".travel-card", function () {
+        const contentid = $(this).data("contentid");
+       
+
+
+    
+            window.location.href = `관광지코스세부사항.html?contentid=${encodeURIComponent(contentid)}`;
+      
+        
+    });
+
         $("#areaCode, #courseCode").change(fetchTravelData);
 
     </script>

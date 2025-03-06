@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관광지1</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        /* 기본적인 스타일 설정 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .event-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        p strong {
+            color: #333;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .link-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background-color: #45a049;
+        }
+
+        .loading-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="event-container">
+        <h2>관광 정보</h2>
+        <div id="eventInfo" >정보를 불러오는 중...</div>
+    </div>
+    <script>
+         let urlParams = new URLSearchParams(window.location.search);
+         let contentid = urlParams.get('contentid');
+
+         console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
+
+         function fetchContentDetails(contentid) {
+            if (!contentid) {
+                $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
+                return;
+            }
+
+        $.ajax({
+    url: "http://apis.data.go.kr/B551011/KorService1/detailCommon1",
+    type: "GET",
+    data: {
+        serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", // API 키 입력
+        MobileApp: "AppTest",
+        MobileOS: "ETC",
+        contentId: contentid, 
+        // contentTypeId: "12",  // 관광시설 콘텐츠 유형
+        _type: "json",
+        defaultYN: "Y",
+        firstImageYN: "Y",
+        areacodeYN: "Y",
+        addrinfoYN: "Y",
+        mapinfoYN: "Y",
+        overviewYN: "Y"
+    },
+    success: function (response) {
+        console.log("API 응답:", response);
+
+        let items = response.response.body.items.item;
+        if (!items || items.length === 0) {
+            $("#eventInfo").html("<p>데이터를 찾을 수 없습니다.</p>");
+            return;
+        }
+
+        let item = items[0];  // 첫 번째 데이터
+
+        function checkValue(value) {
+            return value && value.trim() !== "" ? value : "정보 없음";
+        }
+
+        let eventInfoHtml = `
+            <h2>${checkValue(item.title)}</h2>
+            <p><strong>주소:</strong> ${checkValue(item.addr1)}</p>
+            <p><strong>전화번호:</strong> ${checkValue(item.tel)}</p>
+            <p><strong>홈페이지:</strong> ${checkValue(item.homepage)}</p>
+            <p><strong>설명:</strong> ${checkValue(item.overview)}</p>
+            <img src="${item.firstimage}" alt="이미지 없음" style="max-width:300px;">
+        `;
+
+        $("#eventInfo").html(eventInfoHtml);
+    },
+    error: function (xhr, status, error) {
+        console.error("API 요청 실패:", error);
+        console.error("상태 코드:", xhr.status);
+        console.error("응답 메시지:", xhr.responseText);
+        $("#eventInfo").html(`<p>데이터를 불러오는 중 오류가 발생했습니다. (${xhr.status})</p>`);
+    }
+
+});
+         }
+
+
+
+
+        $(document).ready(function () {
+            fetchContentDetails(contentid);  // 페이지가 로드되면 행사 정보를 불러오기
+        });
+
+    </script>
+</body>
+
+</html>
