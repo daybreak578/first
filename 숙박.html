@@ -7,10 +7,11 @@
     <title>숙박업소</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="여행코스.css">
-    <script src="script.js"></script>
+    
 </head>
 
 <body>
+    <script src="script.js"></script>
       <header id="header"></header>
 
     <div id="filter-container">
@@ -60,7 +61,6 @@
                         let htmlContent = "";
                         items.forEach(item => {
                             console.log("item.contentid:", item.contentid);
-                            
                             htmlContent += `
                                 <div class="travel-card" 
                                     data-title="${item.title}" 
@@ -129,18 +129,10 @@
         };
         
         $(document).ready(function () {
-          
             loadSavedTravelData();
-            
         });
         $(document).on("click", ".travel-card", function () {
             const contentid = $(this).data("contentid");
-            console.log("클릭한 travel-card의 contentid:", contentid);
-
-            if (!contentid) {
-                console.log("contentid가 없습니다. 데이터 속성 확인 필요!");
-                return;
-            }
 
             sessionStorage.setItem("ctitle", $(this).data("title"));
             sessionStorage.setItem("caddr", $(this).data("addr"));
