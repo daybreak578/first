@@ -20,7 +20,7 @@
         <p><strong>전화번호:</strong> <span id="tel">정보 없음</span></p>
         <img id="image" src="" alt="이미지 없음">
         <a href="./관광지.html" class="back-btn">목록으로 돌아가기</a>
-        <a href="" id="goToEvent1" >상세 보기</a>
+        <a href="" id="detail-btn" >상세 보기</a>
     </div>
 
     </div>
@@ -37,7 +37,7 @@
         console.log("contentid:", contentid); // contentid 확인
 
         if (contentid) {
-            document.getElementById("goToEvent1").addEventListener("click", function (event) {
+            document.getElementById("detail-btn").addEventListener("click", function (event) {
                 event.preventDefault(); // 기본 동작 막기
                 const url = `./관광지1.html?contentid=${encodeURIComponent(contentid)}`;
                 window.open(url, '_blank'); // '_blank'는 새 탭 또는 새 창을 의미
