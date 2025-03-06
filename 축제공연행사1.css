@@ -1,0 +1,61 @@
+/* Google Fonts 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+
+/* 전체 스타일 */
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 행사 정보 컨테이너 */
+.event-container {
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* 제목 스타일 */
+.event-container h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 정보 스타일 */
+.event-container p {
+    font-size: 16px;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 마지막 줄은 밑줄 제거 */
+.event-container p:last-child {
+    border-bottom: none;
+}
+
+/* 강조 텍스트 */
+.event-container p strong {
+    color: #222;
+    font-weight: 700;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .event-container {
+        width: 95%;
+        padding: 15px;
+    }
+}

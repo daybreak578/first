@@ -37,7 +37,8 @@
         if (contentid) {
             document.getElementById("detail-btn").addEventListener("click", function (event) {
                 event.preventDefault(); // 기본 동작 막기
-                window.location.href = `./축제공연행사1.html?contentid=${encodeURIComponent(contentid)}`;
+                const url = `./축제공연행사1.html?contentid=${encodeURIComponent(contentid)}`;
+                window.open(url, '_blank'); // '_blank'는 새 탭 또는 새 창을 의미
             });
         } else {
             console.warn("contentid가 없습니다.");
