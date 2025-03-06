@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문화시설 목록</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+  /* Google Fonts 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+
+/* 전체 스타일 */
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 행사 정보 컨테이너 */
+.event-container {
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* 제목 스타일 */
+.event-container h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 정보 스타일 */
+.event-container p {
+    font-size: 16px;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 마지막 줄은 밑줄 제거 */
+.event-container p:last-child {
+    border-bottom: none;
+}
+
+/* 강조 텍스트 */
+.event-container p strong {
+    color: #222;
+    font-weight: 700;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .event-container {
+        width: 95%;
+        padding: 15px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="event-container">
+        <h2>문화시설 정보</h2>
+        <div id="eventInfo">정보를 불러오는 중...</div>
+    </div>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let contentid = urlParams.get('contentid');
+
+        console.log("contentid", contentid);  // contentid 확인
+
+        function fetchContentDetails(contentid) {
+            if (!contentid) {
+                $("#eventInfo").html("<p>문화시설 정보가 제공되지 않았습니다.</p>");
+                return;
+            }
+
+            $.ajax({
+                url: "http://apis.data.go.kr/B551011/KorService1/detailIntro1",
+                type: "GET",
+                data: {
+                    serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", 
+                    MobileApp: "AppTest",
+                    MobileOS: "ETC",
+                    contentId: contentid,
+                    contentTypeId: "14",
+                    _type: "json",
+                },
+                success: function (response) {
+                    console.log("API 응답:", response);
+
+                    let items = response.response.body.items.item;
+                    if (!items || items.length === 0) {
+                        $("#eventInfo").html("<p>데이터를 찾을 수 없습니다.</p>");
+                        return;
+                    }
+
+                    function checkValue(value) {
+                        return value && value.trim() !== "" ? value : "정보 없음";
+                    }
+
+                    let eventInfoHtml = "<div class='course-item'>";
+
+                    let item = items[0]; // 첫 번째 데이터만 사용
+
+                    eventInfoHtml += `
+                        <p><strong>수용인원:</strong> ${checkValue(item.accomcountculture)}</p>
+                        <p><strong>유모차 대여:</strong> ${checkValue(item.chkbabycarriageculture)}</p>
+                        <p><strong>신용카드 사용:</strong> ${checkValue(item.chkcreditcardculture)}</p>
+                        <p><strong>애완동물 동반:</strong> ${checkValue(item.chkpetculture)}</p>
+                        <p><strong>할인 정보:</strong> ${checkValue(item.discountinfo)}</p>
+                        <p><strong>문의 및 안내:</strong> ${checkValue(item.infocenterculture)}</p>
+                        <p><strong>주차 가능 여부:</strong> ${checkValue(item.parkingculture)}</p>
+                        <p><strong>주차 요금:</strong> ${checkValue(item.parkingfee)}</p>
+                        <p><strong>쉬는 날:</strong> ${checkValue(item.restdateculture)}</p>
+                        <p><strong>이용 요금:</strong> ${checkValue(item.usefee)}</p>
+                        <p><strong>이용 시간:</strong> ${checkValue(item.usetimeculture)}</p>
+                        <p><strong>규모:</strong> ${checkValue(item.scale)}</p>
+                        <p><strong>관람 소요 시간:</strong> ${checkValue(item.spendtime)}</p>
+                    `;
+
+                    eventInfoHtml += "</div>";
+
+                    $("#eventInfo").html(eventInfoHtml);
+                },
+                error: function (xhr, status, error) {
+                    console.error("API 요청 실패:", error);
+                    $("#eventInfo").html(`<p>데이터를 불러오는 중 오류가 발생했습니다. (${xhr.status})</p>`);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            fetchContentDetails(contentid);  // 페이지 로드시 실행
+        });
+    </script>
+</body>
+</html>
