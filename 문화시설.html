@@ -137,6 +137,13 @@
             window.location.href = `문화시설세부사항.html`;
         });
 
+        $(document).on("click", ".travel-card", function () {
+        const contentid = $(this).data("contentid");     
+
+        window.location.href = `문화시설세부사항.html?contentid=${encodeURIComponent(contentid)}`;
+                  
+    });
+
         $("#areaCode, #courseCode").change(fetchTravelData());
 
     </script>
