@@ -77,11 +77,9 @@
 
                                 console.log(roomList);  
                                 $('#room-card').html(roomList);  
-                            } else {
-                                $('#room-card').html("<p>해당 콘텐츠에 대한 객실 정보가 없습니다.</p>");
                             }
                         } else {
-                            $('#room-card').html("<p>응답 형식에 문제가 있습니다. 객실 정보를 가져올 수 없습니다.</p>");
+                            $('#room-card').html("<h1>해당 콘텐츠에 대한 객실 정보가 없습니다.</h1>");
                         }
                     },
                     error: function () {
