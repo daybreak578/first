@@ -51,15 +51,16 @@
                     _type: "json"
                 },
                 success: function (response) {
-
                     console.log(response);
+
                     if (response.response?.body?.items?.item) {
                         const items = response.response.body.items.item;
+                        console.log("items:", items);
+
                         let htmlContent = "";
-
-                        console.log(response);
-
                         items.forEach(item => {
+                            console.log("item.contentid:", item.contentid);
+                            
                             htmlContent += `
                                 <div class="travel-card" 
                                     data-title="${item.title}" 
@@ -67,7 +68,8 @@
                                     data-addr="${item.addr1 || ''}" 
                                     data-tel="${item.tel || ''}"                                   
                                     data-mapx="${item.mapx || ''}" 
-                                    data-mapy="${item.mapy || ''}">                                    
+                                    data-mapy="${item.mapy || ''}"
+                                    data-contentid="${item.contentid || ''}">                                    
                                     <h4>${item.title}</h4>
                                 </div>
                             `;
@@ -132,12 +134,21 @@
             
         });
         $(document).on("click", ".travel-card", function () {
+            const contentid = $(this).data("contentid");
+            console.log("클릭한 travel-card의 contentid:", contentid);
+
+            if (!contentid) {
+                console.log("contentid가 없습니다. 데이터 속성 확인 필요!");
+                return;
+            }
+
             sessionStorage.setItem("ctitle", $(this).data("title"));
             sessionStorage.setItem("caddr", $(this).data("addr"));
             sessionStorage.setItem("ctel", $(this).data("tel"));
             sessionStorage.setItem("cimage", $(this).data("image"));
             sessionStorage.setItem("cmapx", $(this).data("mapx"));
             sessionStorage.setItem("cmapy", $(this).data("mapy"));
+            sessionStorage.setItem("contentid", contentid);
             window.location.href = `숙박정보상세.html`;
         });
 

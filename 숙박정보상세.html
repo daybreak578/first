@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>여행 코스 상세 정보</title>
+    <title>숙박정보상세</title>
     <link rel="stylesheet" href="./여행코스세부사항.css">
     <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
 </head>
@@ -20,6 +20,7 @@
         <p><strong>주소:</strong> <span id="addr">정보 없음</span></p>
         <p><strong>전화번호:</strong> <span id="tel">정보 없음</span></p>
         <a href="./숙박.html" class="back-btn">목록으로 돌아가기</a>
+        <button id="detail-btn">상세 정보</button>
     </div>
 
     </div>
@@ -30,8 +31,10 @@
     <!-- Kakao 지도 API (defer 속성 제거) -->
     <script type="text/javascript"
         src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=351c7f5e8166ca2967f8f005df63b4ab"></script>
+
     <script>
         window.onload = function () {
+            // 세션에서 저장된 정보 불러오기
             document.getElementById("title").textContent = sessionStorage.getItem("ctitle") || "정보없음";
             document.getElementById("addr").textContent = sessionStorage.getItem("caddr") || "정보없음";
             document.getElementById("tel").textContent = sessionStorage.getItem("ctel") || "정보없음";
@@ -41,22 +44,76 @@
             } else {
                 imageElement.style.display = "none"; // 이미지 없을 경우 숨김
             }
-            let mapX = sessionStorage.getItem("cmapy");
-            let mapY = sessionStorage.getItem("cmapx");
-            // Kakao 지도 API가 완전히 로드된 후 실행
+
+            // 상세정보버튼 클릭 시 상세 정보 페이지로 이동
+            document.getElementById("detail-btn").addEventListener("click", function () {
+                const hotelTitle = sessionStorage.getItem("ctitle");
+                const hotelAddr = sessionStorage.getItem("caddr");
+                const hotelTel = sessionStorage.getItem("ctel");
+                const hotelImage = sessionStorage.getItem("cimage");
+                const mapX = sessionStorage.getItem("cmapx");
+                const mapY = sessionStorage.getItem("cmapy");
+                const contentid = sessionStorage.getItem("contentid");  // contentid 추가
+
+                // 상세 페이지로 이동하면서 쿼리 스트링에 데이터 전달
+                window.location.href = `숙박정보.html?title=${encodeURIComponent(hotelTitle)}&addr=${encodeURIComponent(hotelAddr)}&tel=${encodeURIComponent(hotelTel)}&image=${encodeURIComponent(hotelImage)}&mapx=${encodeURIComponent(mapX)}&mapy=${encodeURIComponent(mapY)}&contentid=${encodeURIComponent(contentid)}`;
+            });
+
+            // 지도 관련 코드
+            let mapX = sessionStorage.getItem("cmapx");  // 경도
+            let mapY = sessionStorage.getItem("cmapy");  // 위도
             let mapContainer = document.getElementById("map"),
                 mapOption = {
-                    center: new kakao.maps.LatLng(mapX, mapY),
+                    center: new kakao.maps.LatLng(mapY, mapX),  // 위도, 경도 순으로 변경
                     level: 5,
                 };
             let map = new kakao.maps.Map(mapContainer, mapOption);
             let marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(mapX, mapY)
+                position: new kakao.maps.LatLng(mapY, mapX)  // 위도, 경도 순으로 변경
             });
             marker.setMap(map);
 
+            // contentid 세션에서 불러오기
+            const contentid = sessionStorage.getItem("contentid");
+            if (contentid) {
+                console.log("contentid:", contentid);
+                fetchContentDetails(contentid);
+            } else {
+                console.log("contentid가 세션에 없습니다.");
+            }
+
+            function fetchContentDetails(contentid) {
+                $.ajax({
+                    url: "http://apis.data.go.kr/B551011/KorService1/detailCommon1", // 실제 API URL 확인
+                    type: "GET",
+                    data: {
+                        serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", // 인증키 확인
+                        MobileApp: "AppTest",
+                        MobileOS: "ETC",
+                        contentId: contentid,
+                        _type: "json"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if (response.response?.body?.items?.item) {
+                            const item = response.response.body.items.item[0];
+                            // 상세 정보를 HTML로 출력
+                            const detailHtml = `
+                    
+                `;
+                            $(".travel-detail").append(detailHtml);  // 상세 내용 추가
+                        } else {
+                            $(".travel-detail").append("<p>상세 정보를 불러올 수 없습니다.</p>");
+                        }
+                    },
+                    error: function () {
+                        $(".travel-detail").append("<p>상세 정보 불러오기 오류</p>");
+                    }
+                });
+            }
         };
     </script>
+
 
 </body>
 
