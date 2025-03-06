@@ -60,7 +60,8 @@
 
                         items.forEach(item => {
                             htmlContent += `
-                                <div class="travel-card" 
+                                <div class="travel-card"
+                                data-contentid="${item.contentid}"   
                                     data-title="${item.title}" 
                                     data-image="${item.firstimage}"
                                     data-addr="${item.addr1 || ''}" 
@@ -101,7 +102,8 @@
                 let htmlContent = "";
                 items.forEach(item => {
                     htmlContent += `
-                        <div class="travel-card" 
+                        <div class="travel-card"
+                        data-contentid="${item.contentid}"   
                             data-title="${item.title}" 
                             data-image="${item.firstimage || ''}"
                             data-addr="${item.addr1 || ''}" 
@@ -137,6 +139,13 @@
             sessionStorage.setItem("cmapy", $(this).data("mapy"));
             window.location.href = `축제공연행사세부정보.html`;
         });
+
+        $(document).on("click", ".travel-card", function () {
+        const contentid = $(this).data("contentid");     
+
+        window.location.href = `축제공연행사세부정보.html?contentid=${encodeURIComponent(contentid)}`;
+                  
+    });
 
         $("#areaCode, #courseCode").change(fetchTravelData);
 
