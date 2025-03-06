@@ -6,25 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 코스 목록</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="여행코스.css">
+
 </head>
 
 <body>
     <div class="event-container">
         <h2>여행코스 정보</h2>
-        <div id="eventInfo" >정보를 불러오는 중...</div>
+        <div id="eventInfo">정보를 불러오는 중...</div>
     </div>
     <script>
-         let urlParams = new URLSearchParams(window.location.search);
-         let contentid = urlParams.get('contentid');
+        let urlParams = new URLSearchParams(window.location.search);
+        let contentid = urlParams.get('contentid');
 
-         console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
+        console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
 
         function fetchContentDetails(contentid) {
             if (!contentid) {
                 $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
                 return;
             }
+
+
 
             $.ajax({
                 url: "http://apis.data.go.kr/B551011/KorService1/detailInfo1",
@@ -33,7 +35,7 @@
                     serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", // API 키 입력
                     MobileApp: "AppTest",
                     MobileOS: "ETC",
-                    contentId: "1952975",
+                    contentId: contentid,
                     contentTypeId: "25",  // 여행코스 콘텐츠 유형
                     _type: "json",
 
@@ -53,14 +55,17 @@
                         return value && value.trim() !== "" ? value : "정보 없음";
                     }
 
-                    let eventInfoHtml = `
-            <h2>${checkValue(item.title)}</h2>
-            <p><strong>코스이미지설명:</strong> ${checkValue(item.subdetailalt)}</p>
-            <p><strong>코스이미지:</strong> ${checkValue(item.subdetailimg)}</p>
-            <p><strong>코스개요:</strong> ${checkValue(item.subdetailoverview)}</p>
-            <p><strong>코스명:</strong> ${checkValue(item.subname)}</p>
-            <img src="${item.firstimage}" alt="이미지 없음" style="max-width:300px;">
+                    items.forEach(item => {
+                        eventInfoHtml += `
+            <div class="course-item">
+                <h3>${checkValue(item.subname)}</h3>
+                <p><strong>코스 이미지 설명:</strong> ${checkValue(item.subdetailalt)}</p>
+                <p><strong>코스 개요:</strong> ${checkValue(item.subdetailoverview)}</p>
+                ${item.subdetailimg ? `<img src="${item.subdetailimg}" alt="코스 이미지" style="max-width:300px;">` : '<p>이미지 없음</p>'}
+            </div>
+            <hr>
         `;
+                    });
 
                     $("#eventInfo").html(eventInfoHtml);
                 },
