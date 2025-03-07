@@ -8,12 +8,13 @@
     <link rel="icon" href="/images/로고.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        #iframe{
-            width : 900px; 
-            height : 600px;
-            position: absolute; 
-            left:200px;
+        #iframe {
+            width: 1000px;
+            height: 800px;
+            position: absolute;
+            left: 150px;
             margin-top: 30px;
+            overflow: hidden;
         }
 
         #imagearea {
@@ -28,31 +29,31 @@
             top: 700px;
         }
 
-        .slider-container {
-            display: flex;
-            
+        .slider img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out, opacity 0.3s;
+            cursor: pointer;
         }
 
-        .image-slider img {
-            width: 10%; 
-            height: 100%; 
-            object-fit: cover; 
+        .slider img:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
         }
-
     </style>
 
 </head>
 
 <body>
     <script src="script.js"></script>
-
-    <iframe id="iframe" src="" frameborder="1"></iframe>
-
-    <div class="image-slider">
+    <iframe id="iframe" src="" frameborder="0"></iframe>
+    <div class="slider">
         <div id="imagearea"></div>
     </div>
 
     <script>
+
         let urlParams = new URLSearchParams(window.location.search);
         let contentid = urlParams.get('contentid');
 
