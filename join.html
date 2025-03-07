@@ -68,7 +68,7 @@
 			let id = $("#idarea").val();
 			let pw = $("#pwarea").val();
 			let pwConfirm = $("#pwarea2").val();
-
+			let name = $("#name").val();
 			let pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/; // 영문, 숫자만 허용 & 6자 이상
 
 			if (!pwRegex.test(pw)) {
@@ -80,10 +80,30 @@
 				alert("비밀번호가 일치하지 않습니다.");
 				return;
 			}
+			//기존 사용자 데이터 가져오기 (배열 형식)
+			let users = JSON.parse(localStorage.getItem("users")) || [];
 
+			//사용자 정보 객체 생성
+			let user = {
+				id: id,
+				pw: pw,
+				name: name
+			};
+
+			//중복 ID 검사
+			let duplicate = users.some(u => u.id === id);
+			if(duplicate) {
+				alert("이미 존재하는 ID입니다.");
+				return;
+			}
+
+			//사용자 정보 추가
+			users.push(user);
+
+			//데이터 다시 저장(문자열 변환 후 localStorage에 저장)
+			localStorage.setItem("users", JSON.stringify(users));
 			localStorage.setItem("id", id);
 			localStorage.setItem("pw", pw);
-			let name = $("#name").val();
 			localStorage.setItem("name", name);
 				alert("회원가입을 축하드립니다.")
 				window.location.href = "./Home.html";
