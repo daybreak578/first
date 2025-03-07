@@ -69,7 +69,8 @@
                 const contentid = sessionStorage.getItem("contentid");  // contentid 추가
 
                 // 상세 페이지로 이동하면서 쿼리 스트링에 데이터 전달
-                window.location.href = `음식점정보.html?title=${encodeURIComponent(hotelTitle)}&addr=${encodeURIComponent(hotelAddr)}&tel=${encodeURIComponent(hotelTel)}&image=${encodeURIComponent(hotelImage)}&mapx=${encodeURIComponent(mapX)}&mapy=${encodeURIComponent(mapY)}&contentid=${encodeURIComponent(contentid)}`;
+                const url = `음식점정보.html?title=${encodeURIComponent(hotelTitle)}&addr=${encodeURIComponent(hotelAddr)}&tel=${encodeURIComponent(hotelTel)}&image=${encodeURIComponent(hotelImage)}&mapx=${encodeURIComponent(mapX)}&mapy=${encodeURIComponent(mapY)}&contentid=${encodeURIComponent(contentid)}`;
+                window.open(url, '_blank');  // 새 탭 또는 새 창에서 열기
             });
             // contentid 세션에서 불러오기
             const contentid = sessionStorage.getItem("contentid");
