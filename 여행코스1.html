@@ -25,7 +25,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 250px;
-            z-index: 1000; /* 다른 요소보다 위에 표시되도록 */
+            z-index: 1000;
+            /* 다른 요소보다 위에 표시되도록 */
         }
 
         .course-info p {
@@ -46,7 +47,8 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 30px; /* 오른쪽 상단 정보가 겹치지 않도록 조정 */
+            margin-top: 30px;
+            /* 오른쪽 상단 정보가 겹치지 않도록 조정 */
         }
 
         /* 제목 스타일 */
@@ -93,6 +95,25 @@
             background: #ddd;
             margin: 15px 0;
         }
+
+        #close-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 10px;
+            margin-left: 45%;
+            background-color: #7299cc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: #030303;
+        }
+
+        #close-btn:hover {
+            background-color: #2a6a9b;
+        }
     </style>
 </head>
 
@@ -109,7 +130,14 @@
     <div class="event-container">
         <h2>여행 코스 정보</h2>
         <div id="eventInfo">정보를 불러오는 중...</div>
+        <button id="close-btn" onclick="closeWindow()">닫기</button>
     </div>
+
+    <script>
+        function closeWindow() {
+            window.close();
+        }
+    </script>
 
     <script>
         let urlParams = new URLSearchParams(window.location.search);
