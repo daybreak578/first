@@ -29,6 +29,7 @@
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const contentid = urlParams.get('contentid'); 
+            const titlefood = urlParams.get('title'); 
     
             if (contentid) {
                 fetchRestaurantInfo(contentid); 
@@ -100,6 +101,7 @@
                                         <div class="restaurant-card">
                                             
                                             ${imgUrl ? `<img src="${imgUrl}" alt="음식점 이미지" class="restaurant-image">` : ''}
+                                            <p>음식점명: ${titlefood || '정보 없음'}</p>
                                             <p>전화번호: ${restaurant.infocenterfood || '정보 없음'}</p>
                                             <p>대표 메뉴: ${restaurant.firstmenu || '정보 없음'}</p>
                                             <p>사이드 메뉴: ${restaurant.treatmenu || '정보 없음'}</p>
