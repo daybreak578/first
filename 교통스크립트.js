@@ -89,13 +89,13 @@ $(document).ready(function () {
         // 차트 생성/////////////////////////////////////////////////////////////////
         let ctx = document.getElementById("myChart").getContext("2d");
         myChart = new Chart(ctx, {
-          type: "bar", // 차트 종류를 bar로 설정
+          type: "bar",
           data: {
             labels: name, // x축 레이블
             datasets: [
               {
-                label: "교통량",
-                data: totalTraffic, // 각 막대의 데이터 값
+                label: false, // label을 아예 정의하지 않음
+                data: totalTraffic, // 데이터 값
                 backgroundColor: backgroundColors,
                 borderColor: borderColors,
                 borderWidth: 1,
@@ -103,11 +103,23 @@ $(document).ready(function () {
             ],
           },
           options: {
-            responsive: true, // 반응형 설정
+            responsive: true,
             aspectRatio: 0.78,
             scales: {
               y: {
                 beginAtZero: true, // y축을 0부터 시작
+              },
+            },
+            plugins: {
+              legend: {
+                display: false, // 범례(legend) 완전히 숨기기
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (tooltipItem) {
+                    return tooltipItem.raw; // 툴팁에는 숫자 값만 표시, 라벨 없음
+                  },
+                },
               },
             },
           },
