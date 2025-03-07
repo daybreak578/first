@@ -72,41 +72,60 @@
             font-size: 1.2rem;
             color: #777;
         }
+
+        #imagelink {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: 40%;
+            padding: 10px 10px;            
+            background-color: #7299cc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: #030303;
+        }
+
+        #imagelink:hover {
+            background-color: #2a6a9b;
+        }
     </style>
 </head>
 
 <body>
     <div class="event-container">
         <h2>관광 정보</h2>
-        <div id="eventInfo" >정보를 불러오는 중...</div>
+        <div id="eventInfo">정보를 불러오는 중...</div>
         <a href="?" id="imagelink">이미지 상세보기</a>
     </div>
     <script>
-         let urlParams = new URLSearchParams(window.location.search);
-         let contentid = urlParams.get('contentid');
+        let urlParams = new URLSearchParams(window.location.search);
+        let contentid = urlParams.get('contentid');
 
-         console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
-         function fetchContentDetails(contentid) {
+        console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
+        function fetchContentDetails(contentid) {
             if (!contentid) {
                 $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
                 return;
             }
 
-        $.ajax({
-    url: "http://apis.data.go.kr/B551011/KorService1/detailCommon1",
-    type: "GET",
-    data: {
-        serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", // API 키 입력
-        MobileApp: "AppTest",
-        MobileOS: "ETC",
-        contentId: contentid, 
-        // contentTypeId: "12",  // 관광시설 콘텐츠 유형
-        _type: "json",
-        defaultYN: "Y",
-        firstImageYN: "Y",
-        areacodeYN: "Y",
-        addrinfoYN: "Y",
-        mapinfoYN: "Y",
+            $.ajax({
+                url: "http://apis.data.go.kr/B551011/KorService1/detailCommon1",
+                type: "GET",
+                data: {
+                    serviceKey: "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA==", // API 키 입력
+                    MobileApp: "AppTest",
+                    MobileOS: "ETC",
+                    contentId: contentid,
+                    // contentTypeId: "12",  // 관광시설 콘텐츠 유형
+                    _type: "json",
+                    defaultYN: "Y",
+                    firstImageYN: "Y",
+                    areacodeYN: "Y",
+                    addrinfoYN: "Y",
+                    mapinfoYN: "Y",
         overviewYN: "Y"
     },
     success: function (response) {
