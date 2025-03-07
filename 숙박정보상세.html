@@ -56,7 +56,7 @@
                 const contentid = sessionStorage.getItem("contentid");  // contentid 추가
 
                 // 상세 페이지로 이동하면서 쿼리 스트링에 데이터 전달
-                window.location.href = `숙박정보.html?title=${encodeURIComponent(hotelTitle)}&addr=${encodeURIComponent(hotelAddr)}&tel=${encodeURIComponent(hotelTel)}&image=${encodeURIComponent(hotelImage)}&mapx=${encodeURIComponent(mapX)}&mapy=${encodeURIComponent(mapY)}&contentid=${encodeURIComponent(contentid)}`;
+                window.open(`숙박정보.html?title=${encodeURIComponent(hotelTitle)}&addr=${encodeURIComponent(hotelAddr)}&tel=${encodeURIComponent(hotelTel)}&image=${encodeURIComponent(hotelImage)}&mapx=${encodeURIComponent(mapX)}&mapy=${encodeURIComponent(mapY)}&contentid=${encodeURIComponent(contentid)}`, '_blank');
             });
 
             // 지도 관련 코드

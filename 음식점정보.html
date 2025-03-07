@@ -11,93 +11,112 @@
 
 <body>
     <script src="script.js"></script>
-    <header id="header"></header>
 
     <div class="restaurant-container">
-        <div id="restaurant-card"></div> 
+        <div id="restaurant-card"></div>
+        <div id="restaurant-images"></div>
     </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
-            const contentid = urlParams.get('contentid');  // 쿼리 스트링에서 contentid 가져옴
-
+            const contentid = urlParams.get('contentid'); 
+    
             if (contentid) {
-                fetchRestaurantInfo(contentid);  // contentid가 있을 경우 음식점 정보 가져오기
+                fetchRestaurantInfo(contentid); 
             } else {
                 console.log("contentid가 없음");
             }
-
-            // 음식점 정보 가져오기
+    
             function fetchRestaurantInfo(contentid) {
                 const serviceKey = "5EPM0JZGu2vix+JS73ESvNyiqPOiAlZvqw7HOMHMsVok5OAlScfevj/AcerZwoWPXx/B6AkWxHZhcfUp0j/aVA=="; // 인증키
-                const apiUrl = "http://apis.data.go.kr/B551011/KorService1/detailIntro1"; // 음식점 정보 API
-
-                $.ajax({
-                    url: apiUrl,
+                const baseUrl = "http://apis.data.go.kr/B551011/KorService1/";
+    
+                const infoApiUrl = `${baseUrl}detailIntro1`; // 음식점 상세 정보 API
+                const imageApiUrl = `${baseUrl}detailImage1`; // 음식점 이미지 API
+    
+                // 음식점 정보 API 호출
+                let infoRequest = $.ajax({
+                    url: infoApiUrl,
                     type: 'GET',
                     data: {
                         serviceKey: serviceKey,
                         MobileApp: "AppTest",
                         MobileOS: "ETC",
                         contentId: contentid,
-                        contentTypeId: "39",  // 음식점 정보는 contentTypeId 39
+                        contentTypeId: "39",
                         _type: "json"
                     },
-                    success: function (response) {
-                        console.log(response);
-
-                        if (response.response.header.resultCode === "0000" && response.response.body.items) {
-                            let items = response.response.body.items.item;
-
-                            // item이 배열이 아니면 객체일 수 있으므로, 배열처럼 처리
-                            if (!Array.isArray(items)) {
-                                items = [items];  
-                            }
-
-                            // items 배열이 존재하고, 길이가 0 이상인 경우 처리
+                    dataType: "json"
+                });
+    
+                // 음식점 이미지 API 호출
+                let imageRequest = $.ajax({
+                    url: imageApiUrl,
+                    type: 'GET',
+                    data: {
+                        serviceKey: serviceKey,
+                        MobileApp: "AppTest",
+                        MobileOS: "ETC",
+                        contentId: contentid,
+                        imageYN: "Y",  // 이미지 포함 여부
+                        subImageYN: "Y",  // 서브 이미지 포함 여부
+                        _type: "json"
+                    },
+                    dataType: "json"
+                });
+    
+                // 두 개의 API 요청을 병렬로 실행 후 처리
+                Promise.all([infoRequest, imageRequest])
+                    .then(([infoResponse, imageResponse]) => {
+                        console.log("음식점 정보 API 응답:", infoResponse);
+                        console.log("음식점 이미지 API 응답:", imageResponse);
+    
+                        // 음식점 정보 처리
+                        if (infoResponse.response.body.items) {
+                            let items = infoResponse.response.body.items.item;
+                            if (!Array.isArray(items)) items = [items];
+    
                             if (items.length > 0) {
-                                const restaurantList = items.map(restaurant => {
+                                const restaurantInfo = items.map(restaurant => {
+                                    // 이미지 URL 추출
+                                    let imgUrl = '';
+                                    if (imageResponse.response.body.items) {
+                                        let images = imageResponse.response.body.items.item;
+                                        if (!Array.isArray(images)) images = [images];
+                                   
+                                        imgUrl = images.length > 0 ? images[0].originimgurl || images[0].smallimageurl : '';
+                                    }
+    
                                     return `
                                         <div class="restaurant-card">
-                                            <h3>${restaurant.title || '음식점 이름 없음'}</h3>
-                                            <p>주소: ${restaurant.addr || '정보 없음'}</p>
-                                            <p>전화번호: ${restaurant.tel || '정보 없음'}</p>
-                                            <p>신용카드 가능 여부: ${restaurant.chkcreditcardfood || '정보 없음'}</p>
-                                            <p>할인 정보: ${restaurant.discountinfofood || '정보 없음'}</p>
+                                            ${imgUrl ? `<img src="${imgUrl}" alt="음식점 이미지" class="restaurant-image">` : ''}
+                                            <p>전화번호: ${restaurant.infocenterfood || '정보 없음'}</p>
                                             <p>대표 메뉴: ${restaurant.firstmenu || '정보 없음'}</p>
-                                            <p>문의 및 안내: ${restaurant.infocenterfood || '정보 없음'}</p>
-                                            <p>어린이 놀이방 여부: ${restaurant.kidsfacility || '정보 없음'}</p>
-                                            <p>개업일: ${restaurant.opendatefood || '정보 없음'}</p>
+                                            <p>사이드 메뉴: ${restaurant.treatmenu || '정보 없음'}</p>
                                             <p>영업시간: ${restaurant.opentimefood || '정보 없음'}</p>
-                                            <p>포장 가능 여부: ${restaurant.packing || '정보 없음'}</p>
                                             <p>주차시설: ${restaurant.parkingfood || '정보 없음'}</p>
-                                            <p>예약 안내: ${restaurant.reservationfood || '정보 없음'}</p>
-                                            <p>쉬는 날: ${restaurant.restdatefood || '정보 없음'}</p>
-                                            <p>규모: ${restaurant.scalefood || '정보 없음'}</p>
-                                            <p>좌석 수: ${restaurant.seat || '정보 없음'}</p>
-                                            <p>금연/흡연 여부: ${restaurant.smoking || '정보 없음'}</p>
-                                            <p>취급 메뉴: ${restaurant.treatmenu || '정보 없음'}</p>
-                                            <p>인허가 번호: ${restaurant.lcnsno || '정보 없음'}</p>
+                                            <p>휴일: ${restaurant.restdatefood || '정보 없음'}</p>
                                         </div>
                                     `;
                                 }).join('');
-
-                                console.log(restaurantList);
-                                $('#restaurant-card').html(restaurantList);
+    
+                                $('#restaurant-card').html(restaurantInfo);
+                            } else {
+                                $('#restaurant-card').html("<h1>해당 음식점 정보가 없습니다.</h1>");
                             }
                         } else {
-                            $('#restaurant-card').html("<h1>해당 콘텐츠에 대한 음식점 정보가 없습니다.</h1>");
+                            $('#restaurant-card').html("<h1>음식점 데이터를 가져올 수 없습니다.</h1>");
                         }
-                    },
-                    error: function () {
-                        $('#restaurant-card').html("<p>음식점 정보 요청에 실패했습니다. 서버나 인터넷 연결을 확인하세요.</p>");
-                    }
-                });
+                    })
+                    .catch(error => {
+                        console.error("API 호출 실패:", error);
+                        $('#restaurant-card').html("<p>음식점 정보를 불러오는 데 실패했습니다.</p>");
+                    });
             }
         });
     </script>
-
+    
 </body>
 
 </html>
