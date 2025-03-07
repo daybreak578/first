@@ -63,18 +63,31 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            let id = localStorage.getItem("id");
-            let pw = localStorage.getItem("pw");
+            
             $("#loginbtn").click(login);
             function login() {
+                let users = JSON.parse(localStorage.getItem("users")) || [];
+                let id = $("#idarea").val();
+                let pw = $("#pwarea").val();
                 let loginstatus = false;
-                if ($("#idarea").val() == id && $("#pwarea").val() == pw) {
-                    loginstatus = true;
-                    sessionStorage.setItem("loginstatus", loginstatus)
+
+                let loginUser = null;
+
+                users.forEach(user => {
+                    if (user.id === id && user.pw === pw) {
+                        loginUser = user; //찾은 유저 저장
+                        loginstatus = true;
+                    }
+                });
+
+                if(loginUser) {
+                    sessionStorage.setItem("loginstatus", loginstatus);
+                    sessionStorage.setItem("name", loginUser.name); //로그인한 유저의 이름 저장
+                    localStorage.setItem("name", loginUser.name); // 로그인한 사용자 이름 갱신 (여기서 name 값 변경됨)
+                    alert(`${loginUser.name}님, 환영합니다!`);
                     window.location.href = "Home.html";
-                    alert("로그인 되었습니다.")
                 } else {
-                    alert("id나 password가 일치하지 않습니다.")
+                    alert("ID나 Password가 일치하지 않습니다.");
                 }
             }
         });
