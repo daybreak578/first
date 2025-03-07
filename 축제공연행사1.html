@@ -12,7 +12,18 @@
     <div class="event-container">
         <h2>행사 정보</h2>
         <div id="eventInfo">행사 정보를 불러오는 중...</div>
+        <button id="close-btn" onclick="closeWindow()">닫기</button>
     </div>
+
+   
+
+    <script>
+        function closeWindow() {
+            window.close();
+        }
+        </script>
+
+
     <script>
      let urlParams = new URLSearchParams(window.location.search);
      let contentid = urlParams.get('contentid');

@@ -68,6 +68,24 @@ body {
         padding: 15px;
     }
 }
+#close-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 10px;
+    margin-left: 45%;
+    background-color: #7299cc;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: #030303;
+  }
+  
+  #close-btn:hover {
+    background-color: #2a6a9b;
+  }
 
     </style>
 </head>
@@ -75,7 +93,15 @@ body {
     <div class="event-container">
         <h2>문화시설 정보</h2>
         <div id="eventInfo">정보를 불러오는 중...</div>
+        <button id="close-btn" onclick="closeWindow()">닫기</button>
     </div>
+
+    
+    <script>
+        function closeWindow() {
+            window.close();
+        }
+        </script>
 
     <script>
         let urlParams = new URLSearchParams(window.location.search);
