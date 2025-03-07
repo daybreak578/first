@@ -7,14 +7,50 @@
     <title>여행 코스</title>
     <link rel="icon" href="/images/로고.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        #iframe{
+            width : 900px; 
+            height : 600px;
+            position: absolute; 
+            left:200px;
+            margin-top: 30px;
+        }
+
+        #imagearea {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 160px;
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            top: 700px;
+        }
+
+        .slider-container {
+            display: flex;
+            
+        }
+
+        .image-slider img {
+            width: 10%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+    </style>
 
 </head>
 
 <body>
     <script src="script.js"></script>
-    <div id="imagearea" style="position: absolute; top: 700px;"></div>
-    <iframe id="iframe" src="" frameborder="1" width="800px" height="600px"
-        style="position: absolute; left:200px;"></iframe>
+
+    <iframe id="iframe" src="" frameborder="1"></iframe>
+
+    <div class="image-slider">
+        <div id="imagearea"></div>
+    </div>
 
     <script>
         let urlParams = new URLSearchParams(window.location.search);
