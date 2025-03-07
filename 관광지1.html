@@ -78,13 +78,13 @@
     <div class="event-container">
         <h2>관광 정보</h2>
         <div id="eventInfo" >정보를 불러오는 중...</div>
+        <a href="?" id="imagelink">이미지 상세보기</a>
     </div>
     <script>
          let urlParams = new URLSearchParams(window.location.search);
          let contentid = urlParams.get('contentid');
 
          console.log("contentid", contentid);  // contentid가 제대로 출력되는지 확인
-
          function fetchContentDetails(contentid) {
             if (!contentid) {
                 $("#eventInfo").html("<p>관광 정보가 제공되지 않았습니다.</p>");
@@ -149,6 +149,11 @@
 
         $(document).ready(function () {
             fetchContentDetails(contentid);  // 페이지가 로드되면 행사 정보를 불러오기
+            if(contentid) {
+                $("#imagelink").attr("href", `관광지이미지.html?contentid=${contentid}`);
+            } else {
+                $('#imagelink').hide();
+            }
         });
 
     </script>

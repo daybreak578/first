@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 코스</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-   
+
 </head>
 
 <body>
     <script src="script.js"></script>
-    <header id="header"></header>
-
-    <div id="travel-list"></div>
+    <div id="imagearea" style="position: absolute; top: 700px;"></div>
+    <iframe id="iframe" src="" frameborder="1" width="800px" height="600px"
+        style="position: absolute; left:200px;"></iframe>
 
     <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let contentid = urlParams.get('contentid');
+
         function fetchTravelData() {
             $.ajax({
                 url: "http://apis.data.go.kr/B551011/KorService1/detailImage1",
@@ -26,7 +29,7 @@
                     MobileOS: "ETC",
                     pageNo: 1,
                     numOfRows: 99,
-                    contentId: "264470",
+                    contentId: contentid,
                     imageYN: "Y",
                     subImageYN: "Y",
                     _type: "json"
@@ -40,25 +43,26 @@
 
                         items.forEach(item => {
                             htmlContent += `
-                                <div class="travel-card" 
-                                    data-contentid="${item.contentid}"  
-                                    data-title="${item.originimgurl}">
-                                   
-                                    <img src="${item.originimgurl}" alt="${item.title}" style="width:200px; height:auto;">
-                                </div>
+                                <span>
+                                    <a href="#" class="image-link">
+                                        <img src="${item.originimgurl}" alt="${item.title}" style="width:200px; height:auto;">
+                                        </a>
+                                </span>
                             `;
                         });
 
-                        $("#travel-list").html(htmlContent);
+                        $("#imagearea").html(htmlContent);
+                        $(".image-link img").on("click", function (event) {
+                            let imgSrc = $(this).attr("src");
+                            $("#iframe").attr("src", imgSrc);
+                        });
 
-                        // 검색 결과를 sessionStorage에 저장
-                        sessionStorage.setItem("travelList", JSON.stringify(items));
                     } else {
-                        $("#travel-list").html("<p>여행 코스를 찾을 수 없습니다.</p>");
+                        $("#imagearea").html("<p>이미지를 찾을 수 없습니다.</p>");
                     }
                 },
                 error: function () {
-                    $("#travel-list").html("<p>데이터 불러오기 오류</p>");
+                    $("#imagearea").html("<p>데이터 불러오기 오류</p>");
                 }
             });
         }
