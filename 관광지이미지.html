@@ -8,13 +8,33 @@
     <link rel="icon" href="/images/로고.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        #iframe {
+        #image-container {
             width: 1000px;
-            height: 800px;
+            height: 600px;
             position: absolute;
-            left: 150px;
-            margin-top: 30px;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            /* 가로 중앙 정렬 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            background-color: white;           
+        }
+
+        /* 이미지 스타일 */
+        #displayed-image {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            /* 부모 기준으로 위치 지정 */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* 가로, 세로 중앙 정렬 */
+            object-fit: contain;
+            /* 원본 비율 유지하며 컨테이너에 맞춤 */
         }
 
         #imagearea {
@@ -47,7 +67,9 @@
 
 <body>
     <script src="script.js"></script>
-    <iframe id="iframe" src="" frameborder="0"></iframe>
+    <div id="image-container">
+        <img id="displayed-image" src="" alt="이미지">
+    </div>
     <div class="slider">
         <div id="imagearea"></div>
     </div>
@@ -79,6 +101,8 @@
                         const items = response.response.body.items.item;
                         let htmlContent = "";
 
+                        let firstImageUrl = items.length > 0 ? items[0].originimgurl : "";
+
                         items.forEach(item => {
                             htmlContent += `
                                 <span>
@@ -90,9 +114,13 @@
                         });
 
                         $("#imagearea").html(htmlContent);
+
+                        if (firstImageUrl) {
+                            $("#displayed-image").attr("src", firstImageUrl);
+                        }
                         $(".image-link img").on("click", function (event) {
                             let imgSrc = $(this).attr("src");
-                            $("#iframe").attr("src", imgSrc);
+                            $("#displayed-image").attr("src", imgSrc);
                         });
 
                     } else {
