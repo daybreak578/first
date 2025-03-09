@@ -64,6 +64,7 @@
                             console.log("item.contentid:", item.contentid);
                             htmlContent += `
                                 <div class="travel-card" 
+                                 data-contentid="${item.contentid}"   
                                     data-title="${item.title}" 
                                     data-image="${item.firstimage}"
                                     data-addr="${item.addr1 || ''}" 
@@ -106,6 +107,7 @@
                 items.forEach(item => {
                     htmlContent += `
                         <div class="travel-card" 
+                          data-contentid="${item.contentid}"  
                             data-title="${item.title}" 
                             data-image="${item.firstimage || ''}"
                             data-addr="${item.addr1 || ''}" 
@@ -144,6 +146,13 @@
             sessionStorage.setItem("contentid", contentid);
             window.location.href = `숙박정보상세.html`;
         });
+
+        $(document).on("click", ".travel-card", function () {
+        const contentid = $(this).data("contentid");     
+
+        window.location.href = `숙박정보상세.html?contentid=${encodeURIComponent(contentid)}`;
+                  
+    });
 
         $("#areaCode, #courseCode").change(fetchTravelData);
 
