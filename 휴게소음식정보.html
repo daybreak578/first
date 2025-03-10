@@ -137,7 +137,7 @@
                             foodTable += `<tr><td colspan="3">음식 정보 없음</td></tr>`;
                         } else {
                             foodItems.forEach(item => {
-                                foodTable += `<tr><td>${item.foodNm}</td><td>${item.foodCost}원</td><td>${item.etc}</td></tr>`;
+                                foodTable += `<tr><td>${item.foodNm}</td><td>${item.foodCost}원</td>  <td>${item.etc ? item.etc : '정보 없음'}</td></tr>`;
                             });
                         }
                         foodTable += `</tbody></table>`;
@@ -169,7 +169,7 @@
                             convTable += `<tr><td colspan="2">편의시설 정보 없음</td></tr>`;
                         } else {
                             convItems.forEach(item => {
-                                convTable += `<tr><td>${item.psName}</td><td>${item.psDesc}</td></tr>`;
+                                convTable += `<tr><td>${item.psName}</td><td>${item.psDesc ? item.psDesc : '정보없음'}</td></tr>`;
                             });
                         }
                         convTable += `</tbody></table>`;
