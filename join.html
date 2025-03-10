@@ -72,6 +72,12 @@
 		font-size: 15px;
 		margin-left: 10px;
 	}
+
+	.pw-show2 {
+		font-size: 15px;
+		margin-left: 10px;
+	}
+
 </style>
 
 <script type="text/javascript">
@@ -83,7 +89,12 @@
 		// 비밀번호 표시 체크박스 기능
 		$(".pw-show input").on("change", function () {
 			let type = $(this).is(":checked") ? "text" : "password";
-			$("#pwarea, #pwarea2").attr("type", type);
+			$("#pwarea").attr("type", type);
+		});
+
+		$(".pw-show2 input").on("change", function () {
+			let type = $(this).is(":checked") ? "text" : "password";
+			$("#pwarea2").attr("type", type);
 		});
 	});
 
@@ -164,7 +175,7 @@
 
 		<h3>
 			<label for="pwarea2"><span class="required">*</span> 비밀번호 확인</label>
-			<label class="pw-show">
+			<label class="pw-show2">
 				<input type="checkbox">비밀번호 표시
 			</label>
 		</h3>
