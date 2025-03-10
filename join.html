@@ -72,7 +72,6 @@
 		font-size: 15px;
 		margin-left: 10px;
 	}
-
 </style>
 
 <script type="text/javascript">
@@ -83,10 +82,10 @@
 
 		// 비밀번호 표시 체크박스 기능
 		$(".pw-show input").on("change", function () {
-        let type = $(this).is(":checked") ? "text" : "password";
-        $("#pwarea, #pwarea2").attr("type", type);
-    });
-});
+			let type = $(this).is(":checked") ? "text" : "password";
+			$("#pwarea, #pwarea2").attr("type", type);
+		});
+	});
 
 	function join() {
 		let id = $("#idarea").val();
@@ -149,22 +148,25 @@
 		<input type="text" id="name" required>
 
 		<h3>
-			<label for="idarea"><span class="required">*</span> ID</label>
+			<label for="idarea"><span class="required">*</span> 아이디</label>
 		</h3>
 		<input type="text" id="idarea" required>
 
 		<h3>
-			<label for="pwarea"><span class="required">*</span> Password</label>
+			<label for="pwarea"><span class="required">*</span> 비밀번호</label>
 			<label class="pw-show">
 				<input type="checkbox">비밀번호 표시
 			</label>
 		</h3>
-		
+
 		<input type="password" id="pwarea" placeholder="영문, 숫자, 특수문자를 포함하며 8자 이상" required>
-		
+
 
 		<h3>
-			<label for="pwarea2"><span class="required">*</span> Password Confirm</label>
+			<label for="pwarea2"><span class="required">*</span> 비밀번호 확인</label>
+			<label class="pw-show">
+				<input type="checkbox">비밀번호 표시
+			</label>
 		</h3>
 		<input type="password" id="pwarea2" required>
 		<input type="button" class="joinbtn" id="joinbtn" value="회원가입">
