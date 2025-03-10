@@ -67,6 +67,12 @@
 		background-color: rgb(248, 249, 250);
 		color: black;
 	}
+
+	.pw-show {
+		font-size: 15px;
+		margin-left: 10px;
+	}
+
 </style>
 
 <script type="text/javascript">
@@ -74,7 +80,14 @@
 		$("#joinbtn").on("click", function () {
 			join();
 		});
-	});
+
+		// 비밀번호 표시 체크박스 기능
+		$(".pw-show input").on("change", function () {
+        let type = $(this).is(":checked") ? "text" : "password";
+        $("#pwarea, #pwarea2").attr("type", type);
+    });
+});
+
 	function join() {
 		let id = $("#idarea").val();
 		let pw = $("#pwarea").val();
@@ -142,8 +155,13 @@
 
 		<h3>
 			<label for="pwarea"><span class="required">*</span> Password</label>
+			<label class="pw-show">
+				<input type="checkbox">비밀번호 표시
+			</label>
 		</h3>
+		
 		<input type="password" id="pwarea" placeholder="영문, 숫자, 특수문자를 포함하며 8자 이상" required>
+		
 
 		<h3>
 			<label for="pwarea2"><span class="required">*</span> Password Confirm</label>
