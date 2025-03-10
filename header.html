@@ -110,24 +110,61 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('.menubtn button').click(function() {
-                $('.menubtn button').removeClass('active');
-                $(this).addClass('active');
+      $(document).ready(function() {
+    // 페이지 로드 시 sessionStorage에서 지역 코드와 코스 코드 값을 불러와 설정
+    const savedAreaCode = sessionStorage.getItem('selectedAreaCode');
+    const savedCourseCode = sessionStorage.getItem('selectedCourseCode');
+
+    if (savedAreaCode) {
+        $('#areaCode').val(savedAreaCode);
+    }
     
-              
-                localStorage.setItem('activeMenu', $(this).val());
-                window.location.href = $(this).val() + '.html';
-            });
-       
-            var activeMenu = localStorage.getItem('activeMenu');
-            if (activeMenu) {
-                
-                $('button[value="' + activeMenu + '"]').addClass('active');
-            } else {
-                $('.menubtn button').first().addClass('active');
-            }
-        });
+    if (savedCourseCode) {
+        $('#courseCode').val(savedCourseCode);
+    }
+
+    // 지역코드 또는 코스코드 선택 시 sessionStorage에 저장
+    $('#areaCode').change(function() {
+        const selectedArea = $(this).val();
+        sessionStorage.setItem('selectedAreaCode', selectedArea);
+        console.log("Selected Area Code 저장 완료:", selectedArea);
+    });
+
+    $('#courseCode').change(function() {
+        const selectedCourse = $(this).val();
+        sessionStorage.setItem('selectedCourseCode', selectedCourse);
+        console.log("Selected Course Code 저장 완료:", selectedCourse);
+    });
+
+    // 메뉴 버튼 클릭 처리
+    $('.menubtn button').click(function() {
+        const menuValue = $(this).val();
+
+        // 메뉴 클릭 시 로컬 및 세션 스토리지 업데이트
+        localStorage.setItem('activeMenu', menuValue);
+        sessionStorage.setItem('pagestatus', menuValue);
+
+        $('.menubtn button').removeClass('active');
+        $(this).addClass('active');
+
+        console.log("localStorage activeMenu:", localStorage.getItem('activeMenu'));
+        console.log("sessionStorage pagestatus:", sessionStorage.getItem('pagestatus'));
+
+        // 페이지 이동 (0.1초 지연)
+        setTimeout(() => {
+            window.location.href = menuValue + '.html';
+        }, 100);
+    });
+
+    // 저장된 메뉴 버튼 활성화 처리
+    const activeMenu = localStorage.getItem('activeMenu') || sessionStorage.getItem('pagestatus');
+    if (activeMenu) {
+        $('button[value="' + activeMenu + '"]').addClass('active');
+    } else {
+        $('.menubtn button').first().addClass('active');
+    }
+});
+
     </script>
     
     

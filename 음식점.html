@@ -96,7 +96,7 @@
 
         $(document).on("click", ".travel-card", function () {
             const contentid = $(this).data("contentid");
-
+         
 
             sessionStorage.setItem("ctitle", $(this).data("title"));
             sessionStorage.setItem("caddr", $(this).data("addr"));
@@ -115,25 +115,28 @@
             const savedAreaCode = sessionStorage.getItem("selectedAreaCode");
             const savedCourseCode = sessionStorage.getItem("selectedCourseCode");
             const savedTravelList = sessionStorage.getItem("travelList");
+            const savedPageStatus = sessionStorage.getItem("pagestatus");
 
-            if (savedAreaCode) $("#areaCode").val(savedAreaCode);
-            if (savedCourseCode) $("#courseCode").val(savedCourseCode);
+            if (savedAreaCode) $("#areaCode").val(savedAreaCode);  // 저장된 지역 코드 복원
+            if (savedCourseCode) $("#courseCode").val(savedCourseCode);  // 저장된 코스 코드 복원
+
+         
             if (savedTravelList) {
                 const items = JSON.parse(savedTravelList);
                 let htmlContent = "";
                 items.forEach(item => {
                     htmlContent += `
-                        <div class="travel-card" 
-                        data-contentid="${item.contentid}"   
-                            data-title="${item.title}" 
-                            data-image="${item.firstimage || ''}"
-                            data-addr="${item.addr1 || ''}" 
-                            data-tel="${item.tel || ''}"                                   
-                            data-mapx="${item.mapx || ''}" 
-                            data-mapy="${item.mapy || ''}">                                    
-                            <h4>${item.title}</h4>
-                        </div>
-                    `;
+                <div class="travel-card" 
+                data-contentid="${item.contentid}"   
+                    data-title="${item.title}" 
+                    data-image="${item.firstimage || ''}"
+                    data-addr="${item.addr1 || ''}" 
+                    data-tel="${item.tel || ''}"                                   
+                    data-mapx="${item.mapx || ''}" 
+                    data-mapy="${item.mapy || ''}">                                    
+                    <h4>${item.title}</h4>
+                </div>
+            `;
                 });
                 $("#travel-list").html(htmlContent);
             }
@@ -153,12 +156,12 @@
         });
 
         $(document).on("click", ".travel-card", function () {
-        const contentid = $(this).data("contentid");     
+            const contentid = $(this).data("contentid");
 
-        window.location.href = `음식점상세정보.html?contentid=${encodeURIComponent(contentid)}`;
-                  
-    });
-       
+            window.location.href = `음식점상세정보.html?contentid=${encodeURIComponent(contentid)}`;
+
+        });
+
         $("#areaCode, #courseCode").change(fetchTravelData);
 
     </script>
