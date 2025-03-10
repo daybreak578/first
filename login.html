@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
-    <body style="align-content: center; background-image: url('images/메인배경.jpg'); background-size: 1280px 800px; background-repeat: no-repeat;"></body>
-    <title>로그인</title>
-    <style type="text/css">
-    #idarea, #pwarea {
+
+<body
+    style="align-content: center; background-image: url('images/메인배경.jpg'); background-size: 1280px 800px; background-repeat: no-repeat;">
+</body>
+<title>로그인</title>
+<style type="text/css">
+    #idarea,
+    #pwarea {
         width: 80%;
         height: 40px;
         border-radius: 12px;
@@ -20,25 +24,25 @@
         backdrop-filter: blur(10px);
         display: flex;
         flex-direction: column;
-        justify-content: flex-start; 
+        justify-content: flex-start;
         align-items: center;
         position: absolute;
-        top: 260px; 
+        top: 260px;
         left: 50%;
         transform: translateX(-50%);
-        width: 310px; 
+        width: 310px;
         height: 370px;
         border-radius: 16px;
         padding: 20px;
-        
+
     }
 
     .centerdiv h2 {
-        margin-top: 0;  
+        margin-top: 0;
     }
 
     .centerdiv h3 {
-        margin-top: 10px;  
+        margin-top: 10px;
         margin-bottom: 10px;
     }
 
@@ -56,64 +60,79 @@
 
     .loginbtn:hover {
         background-color: #f8fafc;
-        color: #010407; 
+        color: #010407;
     }
 
-    </style>
+    .pw-show {
+        font-size: 15px;
+        margin-left: 10px;
+    }
+</style>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            
-            $("#loginbtn").click(login);
-            function login() {
-                let users = JSON.parse(localStorage.getItem("users")) || [];
-                let id = $("#idarea").val();
-                let pw = $("#pwarea").val();
-                let loginstatus = false;
+<script type="text/javascript">
+    $(document).ready(function () {
 
-                let loginUser = null;
+        $("#loginbtn").click(login);
+        
+         // 비밀번호 표시 체크박스 기능
+         $(".pw-show input").on("change", function () {
+                let type = $(this).is(":checked") ? "text" : "password";
+                $("#pwarea").attr("type", type);
+            });
+        function login() {
 
-                users.forEach(user => {
-                    if (user.id === id && user.pw === pw) {
-                        loginUser = user; //찾은 유저 저장
-                        loginstatus = true;
-                    }
-                });
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let id = $("#idarea").val();
+            let pw = $("#pwarea").val();
+            let loginstatus = false;
+            let loginUser = null;
 
-                if(loginUser) {
-                    sessionStorage.setItem("loginstatus", loginstatus);
-                    sessionStorage.setItem("name", loginUser.name); //로그인한 유저의 이름 저장
-                    localStorage.setItem("name", loginUser.name); // 로그인한 사용자 이름 갱신 (여기서 name 값 변경됨)
-                    alert(`${loginUser.name}님, 환영합니다!`);
-                    window.location.href = "Home.html";
-                } else {
-                    alert("ID나 Password가 일치하지 않습니다.");
+            users.forEach(user => {
+                if (user.id === id && user.pw === pw) {
+                    loginUser = user; //찾은 유저 저장
+                    loginstatus = true;
                 }
+            });
+
+            if (loginUser) {
+                sessionStorage.setItem("loginstatus", loginstatus);
+                sessionStorage.setItem("name", loginUser.name); //로그인한 유저의 이름 저장
+                localStorage.setItem("name", loginUser.name); // 로그인한 사용자 이름 갱신 (여기서 name 값 변경됨)
+                alert(`${loginUser.name}님, 환영합니다!`);
+                window.location.href = "Home.html";
+            } else {
+                alert("ID나 Password가 일치하지 않습니다.");
             }
-        });
-    </script>
+        }
+    });
+</script>
 </head>
 
 <body style=" background-image: url('./back.webp'); background-size: cover;">
     <script src="script.js"></script>
     <header id="headerhome">
     </header>
-        <div class="centerdiv">
-            <h2>
-                로그인
-            </h2>
-            <h3>
-                ID
-            </h3>
-            <input type="text" id="idarea">
-            <h3>
-                Password
-            </h3>
-            <input type="password" id="pwarea">
-            <input type="button" class="loginbtn" id="loginbtn" value="로그인">
-        </div>
+    <div class="centerdiv">
+        <h2>
+            로그인
+        </h2>
+        <h3>
+            아이디
+        </h3>
+        <input type="text" id="idarea">
         
-       
+        <h3>
+            <label for="pwarea">비밀번호</label>
+            <label class="pw-show">
+                <input type="checkbox">비밀번호 표시
+            </label>
+        </h3>
+        
+        <input type="password" id="pwarea">
+        <input type="button" class="loginbtn" id="loginbtn" value="로그인">
+    </div>
+
+
 
     <script>
     </script>
