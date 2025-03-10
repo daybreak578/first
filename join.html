@@ -32,7 +32,7 @@
 		width: 310px;
 		height: auto;
 		border-radius: 16px;
-		padding: 20px;
+		padding: 10px;
 	}
 
 	.centerdiv h2 {
@@ -60,7 +60,7 @@
 		background-color: black;
 		color: white;
 		border: none;
-		margin-top: 20px;
+		margin-top: 10px;
 	}
 
 	.joinbtn:hover {
@@ -104,6 +104,16 @@
 		let pwConfirm = $("#pwarea2").val();
 		let name = $("#name").val();
 		let pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/; // 영문, 숫자만 허용 & 6자 이상
+
+		if (!id){
+			alert("아이디를 입력해주세요.");
+			return;
+		}
+
+		if(!name){
+			alert("이름을 입력해주세요");
+			return;
+		}
 
 		if (!pwRegex.test(pw)) {
 			alert("비밀번호는 영문, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다.");
@@ -179,6 +189,7 @@
 				<input type="checkbox">비밀번호 표시
 			</label>
 		</h3>
+		
 		<input type="password" id="pwarea2" required>
 		<input type="button" class="joinbtn" id="joinbtn" value="회원가입">
 	</div>
